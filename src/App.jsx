@@ -68,68 +68,39 @@ const EVENTS = [
   }
 ];
 
-const TECH_NODES = [
-  { text: 'JAVA', color: '#f89820', position: [4, 1.5, -2], shape: 'sphere' },
-  { text: 'PYTHON', color: '#3776ab', position: [-3, -2, -1], shape: 'icosahedron' },
-  { text: 'C++', color: '#00599c', position: [3, -2.5, -3], shape: 'octahedron' },
-  { text: 'REACT', color: '#61dafb', position: [-4, 2.5, -2], shape: 'torus' },
-  { text: 'GIT', color: '#f14e32', position: [0, 3.5, -4], shape: 'icosahedron' },
-];
-
-function TechNode({ text, color, position, shape }) {
+function GlowingCrystal() {
   const mesh = useRef();
   
   useFrame((state) => {
-    if (mesh.current) {
-      const t = state.clock.getElapsedTime();
-      mesh.current.rotation.y = t * 0.2;
-      mesh.current.rotation.x = t * 0.1;
-    }
+    const t = state.clock.getElapsedTime();
+    mesh.current.rotation.y = t * 0.2;
+    mesh.current.rotation.x = t * 0.1;
   });
 
   return (
-    <group position={position}>
-      <Float speed={2} rotationIntensity={2} floatIntensity={3}>
-        <mesh ref={mesh}>
-          {shape === 'box' && <boxGeometry args={[0.5, 0.5, 0.5]} />}
-          {shape === 'sphere' && <sphereGeometry args={[0.35, 16, 16]} />}
-          {shape === 'octahedron' && <octahedronGeometry args={[0.4, 0]} />}
-          {shape === 'icosahedron' && <icosahedronGeometry args={[0.4, 0]} />}
-          {shape === 'torus' && <torusGeometry args={[0.3, 0.1, 16, 32]} />}
-          
-          <meshPhysicalMaterial 
-            color={color} 
-            emissive={color} 
-            emissiveIntensity={1}
-            transparent
-            opacity={0.7}
-            wireframe={shape !== 'sphere'}
-          />
-        </mesh>
-        <Text 
-          position={[0, -0.7, 0]} 
-          fontSize={0.25} 
-          color={color} 
-          fillOpacity={1} 
-          anchorX="center" 
-          anchorY="middle"
-          letterSpacing={0.1}
-          fontWeight="bold"
-        >
-          {text}
-        </Text>
-      </Float>
-    </group>
-  );
-}
-
-function FloatingTechNodes() {
-  return (
-    <group>
-      {TECH_NODES.map((node, i) => (
-        <TechNode key={i} {...node} />
-      ))}
-    </group>
+    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
+      <mesh ref={mesh}>
+        <octahedronGeometry args={[1, 0]} />
+        <meshStandardMaterial 
+          color="#3b82f6" 
+          emissive="#1d4ed8"
+          emissiveIntensity={3}
+          wireframe
+        />
+      </mesh>
+      <mesh>
+        <octahedronGeometry args={[0.8, 0]} />
+        <meshPhysicalMaterial
+          color="#ffffff"
+          transmission={1}
+          roughness={0}
+          thickness={0.5}
+          envMapIntensity={2}
+          clearcoat={1}
+          clearcoatRoughness={0}
+        />
+      </mesh>
+    </Float>
   );
 }
 
@@ -188,7 +159,7 @@ function App() {
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Suspense fallback={null}>
-            <FloatingTechNodes />
+            <GlowingCrystal />
             
             {/* Drastically reduce particles on mobile */}
             <Starfield count={isMobile ? 1200 : 5000} />
