@@ -91,11 +91,11 @@ function GlowingCrystal() {
       <mesh>
         <octahedronGeometry args={[0.8, 0]} />
         <meshStandardMaterial
-          color="#a3b4dbff"
-          emissive="#969aa3ff"
-          emissiveIntensity={0.5}
+          color="#ffffff"
+          emissive="#60a5fa"
+          emissiveIntensity={0.8}
           transparent
-          opacity={0.6}
+          opacity={0.4}
         />
       </mesh>
     </Float>
