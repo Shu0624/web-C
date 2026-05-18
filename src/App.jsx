@@ -104,9 +104,10 @@ function GlowingCrystal() {
   );
 }
 
-function Starfield() {
+function Starfield({ count = 5000 }) {
   const ref = useRef();
-  const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 10 }));
+  // Using useMemo so it correctly regenerates if count changes based on mobile/desktop
+  const sphere = React.useMemo(() => random.inSphere(new Float32Array(count), { radius: 10 }), [count]);
 
   useFrame((state, delta) => {
     ref.current.rotation.x -= delta / 10;
@@ -116,7 +117,6 @@ function Starfield() {
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
-        {/* Using HDR colors [r, g, b] array with values > 1 to trigger bloom */}
         <PointMaterial transparent color={[2, 2, 3]} size={0.06} sizeAttenuation={true} depthWrite={false} opacity={0.8} />
       </Points>
     </group>
@@ -125,39 +125,54 @@ function Starfield() {
 
 function App() {
   const [activeSection, setActiveSection] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if device is mobile for performance optimization
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const currentSection = Math.round(scrollPosition / windowHeight);
-
+      
       if (currentSection !== activeSection) {
         setActiveSection(currentSection);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, [activeSection]);
 
   return (
     <div className="app-container">
       {/* 3D WebGL Background replacing the video */}
       <div className="video-background">
-        <Canvas camera={{ position: [0, 0, 5] }}>
+        {/* Clamp dpr to 1.5 to save massive amounts of GPU overhead on high-density mobile screens */}
+        <Canvas camera={{ position: [0, 0, 5] }} dpr={[1, 1.5]}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Suspense fallback={null}>
             <GlowingCrystal />
-            <Starfield />
-            {/* Make the sparkles bright blue and intense to trigger bloom */}
-            <Sparkles count={150} scale={12} size={3} speed={0.4} opacity={1} color={[1, 1.5, 3]} />
+            
+            {/* Drastically reduce particles on mobile */}
+            <Starfield count={isMobile ? 1200 : 5000} />
+            <Sparkles count={isMobile ? 40 : 150} scale={12} size={isMobile ? 5 : 3} speed={0.4} opacity={1} color={[1, 1.5, 3]} />
+            
             <Environment preset="night" />
-
-            <EffectComposer>
-              <Bloom luminanceThreshold={1} intensity={1} />
-            </EffectComposer>
+            
+            {/* Only run expensive Bloom post-processing on Desktop */}
+            {!isMobile && (
+              <EffectComposer>
+                <Bloom luminanceThreshold={1} intensity={1} />
+              </EffectComposer>
+            )}
           </Suspense>
         </Canvas>
       </div>
