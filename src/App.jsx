@@ -15,8 +15,8 @@ const EVENTS = [
     number: '01',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 30L40 20L90 35L60 45L10 30Z" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)"/>
-        <path d="M20 40L50 30L80 40L50 50L20 40Z" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)"/>
+        <path d="M10 30L40 20L90 35L60 45L10 30Z" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)" />
+        <path d="M20 40L50 30L80 40L50 50L20 40Z" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)" />
         <circle cx="50" cy="50" r="3" fill="#34d399" />
         <circle cx="70" cy="60" r="2" fill="#f43f5e" />
       </svg>
@@ -30,9 +30,9 @@ const EVENTS = [
     number: '02',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="30" y="20" width="40" height="40" rx="4" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)"/>
-        <path d="M10 50Q50 20 90 60" stroke="#fb923c" strokeWidth="2" fill="none"/>
-        <line x1="20" y1="60" x2="80" y2="40" stroke="#f43f5e" strokeWidth="2"/>
+        <rect x="30" y="20" width="40" height="40" rx="4" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)" />
+        <path d="M10 50Q50 20 90 60" stroke="#fb923c" strokeWidth="2" fill="none" />
+        <line x1="20" y1="60" x2="80" y2="40" stroke="#f43f5e" strokeWidth="2" />
       </svg>
     )
   },
@@ -44,9 +44,9 @@ const EVENTS = [
     number: '03',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 40L50 30L80 40L50 50L20 40Z" stroke="#fb923c" strokeWidth="2" fill="rgba(251, 146, 60, 0.1)"/>
-        <rect x="40" y="45" width="20" height="20" stroke="#f43f5e" strokeWidth="2" fill="rgba(244, 63, 94, 0.1)"/>
-        <path d="M30 20Q50 10 70 30" stroke="#34d399" strokeWidth="2" fill="none"/>
+        <path d="M20 40L50 30L80 40L50 50L20 40Z" stroke="#fb923c" strokeWidth="2" fill="rgba(251, 146, 60, 0.1)" />
+        <rect x="40" y="45" width="20" height="20" stroke="#f43f5e" strokeWidth="2" fill="rgba(244, 63, 94, 0.1)" />
+        <path d="M30 20Q50 10 70 30" stroke="#34d399" strokeWidth="2" fill="none" />
       </svg>
     )
   },
@@ -58,11 +58,11 @@ const EVENTS = [
     number: '04',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 60C10 60 10 30 50 30C90 30 90 60 80 60C70 60 70 50 50 50C30 50 30 60 20 60Z" stroke="#a3e635" strokeWidth="2" fill="rgba(163, 230, 53, 0.1)"/>
+        <path d="M20 60C10 60 10 30 50 30C90 30 90 60 80 60C70 60 70 50 50 50C30 50 30 60 20 60Z" stroke="#a3e635" strokeWidth="2" fill="rgba(163, 230, 53, 0.1)" />
         <circle cx="30" cy="45" r="3" fill="#60a5fa" />
         <circle cx="70" cy="45" r="3" fill="#fb923c" />
-        <line x1="45" y1="45" x2="55" y2="45" stroke="#fff" strokeWidth="2"/>
-        <line x1="50" y1="40" x2="50" y2="50" stroke="#fff" strokeWidth="2"/>
+        <line x1="45" y1="45" x2="55" y2="45" stroke="#fff" strokeWidth="2" />
+        <line x1="50" y1="40" x2="50" y2="50" stroke="#fff" strokeWidth="2" />
       </svg>
     )
   }
@@ -70,7 +70,7 @@ const EVENTS = [
 
 function GlowingCrystal() {
   const mesh = useRef();
-  
+
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     mesh.current.rotation.y = t * 0.2;
@@ -81,8 +81,8 @@ function GlowingCrystal() {
     <Float speed={2} rotationIntensity={1} floatIntensity={2}>
       <mesh ref={mesh}>
         <octahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial 
-          color="#3b82f6" 
+        <meshStandardMaterial
+          color="#3b82f6"
           emissive="#1d4ed8"
           emissiveIntensity={3}
           wireframe
@@ -90,12 +90,12 @@ function GlowingCrystal() {
       </mesh>
       <mesh>
         <octahedronGeometry args={[0.8, 0]} />
-        <meshStandardMaterial 
-          color="#ffffff" 
-          emissive="#93c5fd"
-          emissiveIntensity={2}
+        <meshStandardMaterial
+          color="#a3b4dbff"
+          emissive="#969aa3ff"
+          emissiveIntensity={0.5}
           transparent
-          opacity={0.8}
+          opacity={0.6}
         />
       </mesh>
     </Float>
@@ -129,7 +129,7 @@ function App() {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const currentSection = Math.round(scrollPosition / windowHeight);
-      
+
       if (currentSection !== activeSection) {
         setActiveSection(currentSection);
       }
@@ -152,7 +152,7 @@ function App() {
             {/* Make the sparkles bright blue and intense to trigger bloom */}
             <Sparkles count={150} scale={12} size={3} speed={0.4} opacity={1} color={[1, 1.5, 3]} />
             <Environment preset="night" />
-            
+
             <EffectComposer>
               <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} />
             </EffectComposer>
@@ -176,13 +176,13 @@ function App() {
 
       <main className="content-wrapper">
         <section className="viewport-section" id="home">
-          <motion.div 
+          <motion.div
             className="hero-content"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h1 className="hero-title">THE NEXT WAVE<br/>OF INNOVATION</h1>
+            <h1 className="hero-title">THE NEXT WAVE<br />OF INNOVATION</h1>
             <p className="hero-subtitle">The Ultimate College Fest Experience</p>
           </motion.div>
           <div className="scroll-indicator">
@@ -193,15 +193,15 @@ function App() {
 
         <section className="viewport-section" id="about">
           <div className="grid-container">
-            <motion.h2 
+            <motion.h2
               className="section-title"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              EXPERIENCE<br/>YOU CAN BUILD ON
+              EXPERIENCE<br />YOU CAN BUILD ON
             </motion.h2>
-            <motion.div 
+            <motion.div
               className="section-text"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -215,7 +215,7 @@ function App() {
 
         <section className="viewport-section" id="events">
           <div className="events-container">
-            <motion.h2 
+            <motion.h2
               className="events-header text-center"
               initial={{ opacity: 0, y: -30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -223,10 +223,10 @@ function App() {
             >
               OUR MANIFESTO
             </motion.h2>
-            
+
             <div className="events-list">
               {EVENTS.map((event, index) => (
-                <motion.div 
+                <motion.div
                   key={event.id}
                   className="event-row"
                   initial={{ opacity: 0, x: -30 }}
@@ -255,15 +255,15 @@ function App() {
         </section>
 
         <section className="viewport-section footer-section" id="register">
-          <motion.div 
+          <motion.div
             className="footer-content text-center"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="footer-title">READY TO JOIN<br/>THE ECOSYSTEM?</h2>
+            <h2 className="footer-title">READY TO JOIN<br />THE ECOSYSTEM?</h2>
             <button className="register-btn syncopate">REGISTER NOW</button>
-            
+
             <div className="footer-links">
               <a href="#">INSTAGRAM</a>
               <a href="#">DISCORD</a>
