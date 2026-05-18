@@ -38,7 +38,7 @@ h1, h2, h3, h4, .syncopate {
   height: 100vh;
   z-index: -2;
   overflow: hidden;
-  background: radial-gradient(circle at center, #020617 0%, #000000 100%); /* Deep dark blue to pure black */
+  background: radial-gradient(ellipse at 70% 50%, #0a0a1a 0%, #050510 40%, #000000 100%);
 }
 
 .video-background video {

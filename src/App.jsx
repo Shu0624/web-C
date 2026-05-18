@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Points, PointMaterial, Environment, Sparkles, Text } from '@react-three/drei';
+import { Points, PointMaterial, Sparkles } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as random from 'maath/random/dist/maath-random.esm';
 import './App.css';
@@ -70,20 +70,57 @@ const EVENTS = [
 
 
 
-function Starfield({ count = 5000 }) {
+// Full screen scattered stars
+function BackgroundStars({ count = 2000 }) {
   const ref = useRef();
-  // Using useMemo so it correctly regenerates if count changes based on mobile/desktop
-  const sphere = React.useMemo(() => random.inSphere(new Float32Array(count), { radius: 10 }), [count]);
-
+  const positions = React.useMemo(() => random.inSphere(new Float32Array(count * 3), { radius: 15 }), [count]);
+  
   useFrame((state, delta) => {
-    ref.current.rotation.x -= delta / 10;
-    ref.current.rotation.y -= delta / 15;
+    ref.current.rotation.x -= delta * 0.01;
+    ref.current.rotation.y -= delta * 0.02;
   });
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color={[2, 2, 3]} size={0.06} sizeAttenuation={true} depthWrite={false} opacity={0.8} />
+    <group>
+      <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
+        <PointMaterial transparent color="#ffffff" size={0.02} sizeAttenuation depthWrite={false} opacity={0.4} />
+      </Points>
+    </group>
+  );
+}
+
+// The dense, tilted galaxy wave
+function NebulaCore({ count = 3000 }) {
+  const ref = useRef();
+  const positions = React.useMemo(() => random.inSphere(new Float32Array(count * 3), { radius: 5 }), [count]);
+
+  useFrame((state, delta) => {
+    ref.current.rotation.y += delta * 0.05; // Spin on Y axis like a galaxy
+  });
+
+  return (
+    // Positioned right, stretched wide in X and Z, squished in Y to form a disk, tilted.
+    <group position={[3, 0, -3]} rotation={[0.3, 0, -0.2]} scale={[3, 0.4, 3]}>
+      <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
+        <PointMaterial transparent color="#ffffff" size={0.04} sizeAttenuation depthWrite={false} opacity={0.8} />
+      </Points>
+    </group>
+  );
+}
+
+// Colored accent particles (glowing blue/purple)
+function AccentParticles({ count = 500 }) {
+  const ref = useRef();
+  const positions = React.useMemo(() => random.inSphere(new Float32Array(count * 3), { radius: 6 }), [count]);
+
+  useFrame((state, delta) => {
+    ref.current.rotation.y += delta * 0.03;
+  });
+
+  return (
+    <group position={[2, 0, -2]} rotation={[0.3, 0, -0.2]} scale={[2.8, 0.6, 2.8]}>
+      <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
+        <PointMaterial transparent color={[1.5, 0.8, 3]} size={0.05} sizeAttenuation depthWrite={false} opacity={0.9} />
       </Points>
     </group>
   );
@@ -122,19 +159,20 @@ function App() {
       <div className="video-background">
         {/* Clamp dpr to 1.5 to save massive amounts of GPU overhead on high-density mobile screens */}
         <Canvas camera={{ position: [0, 0, 5] }} dpr={[1, 1.5]}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
+          <ambientLight intensity={0.3} />
           <Suspense fallback={null}>
-            {/* Drastically reduce particles on mobile */}
-            <Starfield count={isMobile ? 1200 : 5000} />
-            <Sparkles count={isMobile ? 40 : 150} scale={12} size={isMobile ? 5 : 3} speed={0.4} opacity={1} color={[1, 1.5, 3]} />
+            {/* Multi-layer nebula cluster */}
+            <NebulaCore count={isMobile ? 800 : 2500} />
+            <BackgroundStars count={isMobile ? 500 : 1500} />
+            {!isMobile && <AccentParticles count={300} />}
             
-            <Environment preset="night" />
+            {/* Bright sparkle highlights */}
+            <Sparkles count={isMobile ? 20 : 80} scale={14} size={isMobile ? 4 : 2.5} speed={0.3} opacity={0.8} color="#ffffff" />
             
-            {/* Only run expensive Bloom post-processing on Desktop */}
+            {/* Only run Bloom on Desktop */}
             {!isMobile && (
               <EffectComposer>
-                <Bloom luminanceThreshold={1} intensity={1.2} />
+                <Bloom luminanceThreshold={0.8} intensity={0.8} radius={0.6} />
               </EffectComposer>
             )}
           </Suspense>
