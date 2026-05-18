@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Points, PointMaterial, Environment, Sparkles, Text } from '@react-three/drei';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Glitch } from '@react-three/postprocessing';
 import * as random from 'maath/random/dist/maath-random.esm';
 import './App.css';
 
@@ -69,13 +69,13 @@ const EVENTS = [
 ];
 
 const TECH_NODES = [
-  { text: 'GitHub', color: '#ffffff', pos: [-3, 2, -2], shape: 'box' },
-  { text: 'Java', color: '#f89820', pos: [3, 1, -1], shape: 'sphere' },
-  { text: 'Python', color: '#3776ab', pos: [-2, -2, 0], shape: 'icosahedron' },
-  { text: 'C++', color: '#00599c', pos: [2, -2, -2], shape: 'octahedron' },
-  { text: 'React', color: '#61dafb', pos: [0, 3, -3], shape: 'torus' },
-  { text: 'Node.js', color: '#339933', pos: [0, -3, -1], shape: 'box' },
-  { text: 'Git', color: '#f14e32', pos: [4, 3, -2], shape: 'icosahedron' },
+  { text: 'GITHUB', color: '#ffffff', pos: [-4, 2, -2], shape: 'box' },
+  { text: 'JAVA', color: '#f89820', pos: [4, 1, -1], shape: 'sphere' },
+  { text: 'PYTHON', color: '#3776ab', pos: [-3, -2, 0], shape: 'icosahedron' },
+  { text: 'C++', color: '#00599c', pos: [3, -2, -2], shape: 'octahedron' },
+  { text: 'REACT', color: '#61dafb', pos: [0, 3, -3], shape: 'torus' },
+  { text: 'NODE.JS', color: '#339933', pos: [0, -3, -1], shape: 'box' },
+  { text: 'GIT', color: '#f14e32', pos: [4.5, 3, -2], shape: 'icosahedron' },
 ];
 
 function TechNode({ text, color, position, shape }) {
@@ -90,27 +90,38 @@ function TechNode({ text, color, position, shape }) {
   });
 
   return (
-    <Float speed={1.5} rotationIntensity={2} floatIntensity={2} position={position}>
-      <mesh ref={mesh}>
-        {shape === 'box' && <boxGeometry args={[0.5, 0.5, 0.5]} />}
-        {shape === 'sphere' && <sphereGeometry args={[0.35, 16, 16]} />}
-        {shape === 'octahedron' && <octahedronGeometry args={[0.4, 0]} />}
-        {shape === 'icosahedron' && <icosahedronGeometry args={[0.4, 0]} />}
-        {shape === 'torus' && <torusGeometry args={[0.3, 0.1, 16, 32]} />}
-        
-        <meshPhysicalMaterial 
+    <group position={position}>
+      <Float speed={2} rotationIntensity={2} floatIntensity={3}>
+        <mesh ref={mesh}>
+          {shape === 'box' && <boxGeometry args={[0.5, 0.5, 0.5]} />}
+          {shape === 'sphere' && <sphereGeometry args={[0.35, 16, 16]} />}
+          {shape === 'octahedron' && <octahedronGeometry args={[0.4, 0]} />}
+          {shape === 'icosahedron' && <icosahedronGeometry args={[0.4, 0]} />}
+          {shape === 'torus' && <torusGeometry args={[0.3, 0.1, 16, 32]} />}
+          
+          <meshPhysicalMaterial 
+            color={color} 
+            emissive={color} 
+            emissiveIntensity={1}
+            transparent
+            opacity={0.7}
+            wireframe={shape !== 'sphere'}
+          />
+        </mesh>
+        <Text 
+          position={[0, -0.7, 0]} 
+          fontSize={0.25} 
           color={color} 
-          emissive={color} 
-          emissiveIntensity={0.8}
-          transparent
-          opacity={0.6}
-          wireframe={shape !== 'sphere'}
-        />
-      </mesh>
-      <Text position={[0, -0.7, 0]} fontSize={0.25} color={color} fillOpacity={0.9} anchorX="center" anchorY="middle">
-        {text}
-      </Text>
-    </Float>
+          fillOpacity={1} 
+          anchorX="center" 
+          anchorY="middle"
+          font="https://fonts.gstatic.com/s/syncopate/v12/pe0sMIuPIYBCpEV5eFdCBfe_m-w.woff"
+          letterSpacing={0.1}
+        >
+          {text}
+        </Text>
+      </Float>
+    </group>
   );
 }
 
@@ -190,7 +201,14 @@ function App() {
             {/* Only run expensive Bloom post-processing on Desktop */}
             {!isMobile && (
               <EffectComposer>
-                <Bloom luminanceThreshold={1} intensity={1} />
+                <Bloom luminanceThreshold={1} intensity={1.2} />
+                <Glitch 
+                  delay={[2, 5]} 
+                  duration={[0.1, 0.3]} 
+                  strength={[0.01, 0.03]} 
+                  active 
+                  ratio={0.85} 
+                />
               </EffectComposer>
             )}
           </Suspense>
