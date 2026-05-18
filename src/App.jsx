@@ -90,12 +90,14 @@ function GlowingCrystal() {
       </mesh>
       <mesh>
         <octahedronGeometry args={[0.8, 0]} />
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           color="#ffffff"
-          emissive="#60a5fa"
-          emissiveIntensity={0.8}
-          transparent
-          opacity={0.4}
+          transmission={1}
+          roughness={0}
+          thickness={0.5}
+          envMapIntensity={2}
+          clearcoat={1}
+          clearcoatRoughness={0}
         />
       </mesh>
     </Float>
@@ -154,7 +156,7 @@ function App() {
             <Environment preset="night" />
 
             <EffectComposer>
-              <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} />
+              <Bloom luminanceThreshold={1} intensity={1} />
             </EffectComposer>
           </Suspense>
         </Canvas>
