@@ -171,97 +171,83 @@ function BackgroundStars({ count = 2000 }) {
   );
 }
 
-// A dense, organic twisted galaxy matching Techkriti
-function NebulaCore({ count = 4000 }) {
+// A thin, sweeping 3D twisted ribbon of stars (Black hole ring)
+function NebulaCore({ count = 3000 }) {
   const ref = useRef();
   const positions = React.useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      // Create a thick, hollow sphere (donut-like) that gets sparser outwards
-      const u = Math.random();
-      const v = Math.random();
-      const theta = u * 2.0 * Math.PI;
-      const phi = Math.acos(2.0 * v - 1.0);
+      const angle = Math.random() * Math.PI * 2;
       
-      // We want a hole in the middle, so radius goes from 2.5 to 8
-      // Math.pow() skews the distribution towards the inner edge (dense core ring)
-      const r = 2.5 + Math.pow(Math.random(), 3) * 5.5; 
-      
-      // Convert to cartesian
-      let x = r * Math.sin(phi) * Math.cos(theta);
-      let y = r * Math.sin(phi) * Math.sin(theta);
-      let z = r * Math.cos(phi);
-      
-      // Squash it on the Y axis to make it a disk/fat donut
-      y = y * 0.3;
+      const R = 4; // Main radius
 
-      // Twist the galaxy to create spiral arms
-      const twist = r * 0.3; 
-      const twistedX = x * Math.cos(twist) - z * Math.sin(twist);
-      const twistedZ = x * Math.sin(twist) + z * Math.cos(twist);
-      x = twistedX;
-      z = twistedZ;
-      
-      // Add a tiny bit of random organic noise to break perfection
-      x += (Math.random() - 0.5) * 0.5;
-      y += (Math.random() - 0.5) * 0.5;
-      z += (Math.random() - 0.5) * 0.5;
+      // Calculate base circle
+      let x = Math.cos(angle) * R;
+      let y = 0;
+      let z = Math.sin(angle) * R;
 
-      arr[i * 3] = x;
-      arr[i * 3 + 1] = y;
-      arr[i * 3 + 2] = z;
+      // Warp the circle into a 3D twisted ribbon (Pringles chip / Mobius look)
+      // This creates the distinct folded "black hole" edge
+      y += Math.sin(angle * 2) * 1.5; 
+      
+      // Make some stars tightly bound to the curve, others scattered in a thin disc
+      // Use Math.pow to heavily bias towards 0 (the central string)
+      const scatterBase = Math.pow(Math.random(), 4); 
+      const scatterRange = 1.5;
+      
+      arr[i * 3] = x + (Math.random() - 0.5) * scatterBase * scatterRange;
+      arr[i * 3 + 1] = y + (Math.random() - 0.5) * scatterBase * scatterRange * 0.5; // Flatter Y scatter
+      arr[i * 3 + 2] = z + (Math.random() - 0.5) * scatterBase * scatterRange;
     }
     return arr;
   }, [count]);
 
   useFrame((state, delta) => {
-    ref.current.rotation.y += delta * 0.05; // Spin slowly
+    ref.current.rotation.y -= delta * 0.1; // Rotate the whole structure
+    // Add a very subtle breathing tilt
+    ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
   });
 
   return (
-    // Positioned center-right, tilted to show the hollow center and organic sweep
-    <group position={[1.5, 0, -2]} rotation={[0.4, 0, -0.3]}>
+    // Positioned right, heavily tilted to show off the folding rings
+    <group position={[2.5, 0, -2]} rotation={[0.8, 0.2, -0.4]} scale={[1.2, 1.2, 1.2]}>
       <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color="#ffffff" size={0.035} sizeAttenuation depthWrite={false} opacity={0.8} />
+        <PointMaterial transparent color="#ffffff" size={0.03} sizeAttenuation depthWrite={false} opacity={0.8} />
       </Points>
     </group>
   );
 }
 
-// Colored accent particles that follow the same twisted spiral
+// Colored accent particles strictly following the same warped ribbon
 function AccentParticles({ count = 500 }) {
   const ref = useRef();
   const positions = React.useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const u = Math.random();
-      const v = Math.random();
-      const theta = u * 2.0 * Math.PI;
-      const phi = Math.acos(2.0 * v - 1.0);
+      const angle = Math.random() * Math.PI * 2;
+      const R = 4;
       
-      const r = 2.5 + Math.pow(Math.random(), 2) * 6; 
+      let x = Math.cos(angle) * R;
+      let y = Math.sin(angle * 2) * 1.5;
+      let z = Math.sin(angle) * R;
+
+      const scatterBase = Math.pow(Math.random(), 2); 
+      const scatterRange = 2; // Slightly wider scatter for accents
       
-      let x = r * Math.sin(phi) * Math.cos(theta);
-      let y = r * Math.sin(phi) * Math.sin(theta) * 0.3;
-      let z = r * Math.cos(phi);
-      
-      const twist = r * 0.3; 
-      const twistedX = x * Math.cos(twist) - z * Math.sin(twist);
-      const twistedZ = x * Math.sin(twist) + z * Math.cos(twist);
-      
-      arr[i * 3] = twistedX;
-      arr[i * 3 + 1] = y;
-      arr[i * 3 + 2] = twistedZ;
+      arr[i * 3] = x + (Math.random() - 0.5) * scatterBase * scatterRange;
+      arr[i * 3 + 1] = y + (Math.random() - 0.5) * scatterBase * scatterRange * 0.5;
+      arr[i * 3 + 2] = z + (Math.random() - 0.5) * scatterBase * scatterRange;
     }
     return arr;
   }, [count]);
 
   useFrame((state, delta) => {
-    ref.current.rotation.y += delta * 0.04;
+    ref.current.rotation.y -= delta * 0.1;
+    ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
   });
 
   return (
-    <group position={[1.5, 0, -2]} rotation={[0.4, 0, -0.3]}>
+    <group position={[2.5, 0, -2]} rotation={[0.8, 0.2, -0.4]} scale={[1.2, 1.2, 1.2]}>
       <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
         <PointMaterial transparent color={[1.2, 0.6, 3]} size={0.05} sizeAttenuation depthWrite={false} opacity={0.9} />
       </Points>
