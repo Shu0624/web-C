@@ -68,64 +68,58 @@ const EVENTS = [
   }
 ];
 
-const techSymbols = [
-  { text: '</>', color: '#3b82f6' },
-  { text: 'git', color: '#f97316' },
-  { text: 'Java', color: '#ef4444' },
-  { text: 'Python', color: '#eab308' },
-  { text: 'C++', color: '#3b82f6' },
-  { text: '{ }', color: '#a855f7' },
-  { text: 'JS', color: '#eab308' },
-  { text: 'React', color: '#06b6d4' }
+const TECH_NODES = [
+  { text: 'GitHub', color: '#ffffff', pos: [-3, 2, -2], shape: 'box' },
+  { text: 'Java', color: '#f89820', pos: [3, 1, -1], shape: 'sphere' },
+  { text: 'Python', color: '#3776ab', pos: [-2, -2, 0], shape: 'icosahedron' },
+  { text: 'C++', color: '#00599c', pos: [2, -2, -2], shape: 'octahedron' },
+  { text: 'React', color: '#61dafb', pos: [0, 3, -3], shape: 'torus' },
+  { text: 'Node.js', color: '#339933', pos: [0, -3, -1], shape: 'box' },
+  { text: 'Git', color: '#f14e32', pos: [4, 3, -2], shape: 'icosahedron' },
 ];
 
-function FloatingTechSymbols() {
-  const groupRef = useRef();
-
-  useFrame((state, delta) => {
-    // Slowly rotate the entire cloud of symbols
-    groupRef.current.rotation.y += delta * 0.05;
-    groupRef.current.rotation.x += delta * 0.02;
+function TechNode({ text, color, position, shape }) {
+  const mesh = useRef();
+  
+  useFrame((state) => {
+    if (mesh.current) {
+      const t = state.clock.getElapsedTime();
+      mesh.current.rotation.y = t * 0.2;
+      mesh.current.rotation.x = t * 0.1;
+    }
   });
 
   return (
-    <group ref={groupRef}>
-      {techSymbols.map((item, i) => {
-        // Distribute them in a pseudo-random sphere
-        const phi = Math.acos(-1 + (2 * i) / techSymbols.length);
-        const theta = Math.sqrt(techSymbols.length * Math.PI) * phi;
-        const radius = 2.5 + Math.random() * 1.5;
+    <Float speed={1.5} rotationIntensity={2} floatIntensity={2} position={position}>
+      <mesh ref={mesh}>
+        {shape === 'box' && <boxGeometry args={[0.5, 0.5, 0.5]} />}
+        {shape === 'sphere' && <sphereGeometry args={[0.35, 16, 16]} />}
+        {shape === 'octahedron' && <octahedronGeometry args={[0.4, 0]} />}
+        {shape === 'icosahedron' && <icosahedronGeometry args={[0.4, 0]} />}
+        {shape === 'torus' && <torusGeometry args={[0.3, 0.1, 16, 32]} />}
         
-        const x = radius * Math.cos(theta) * Math.sin(phi);
-        const y = radius * Math.sin(theta) * Math.sin(phi);
-        const z = radius * Math.cos(phi);
+        <meshPhysicalMaterial 
+          color={color} 
+          emissive={color} 
+          emissiveIntensity={0.8}
+          transparent
+          opacity={0.6}
+          wireframe={shape !== 'sphere'}
+        />
+      </mesh>
+      <Text position={[0, -0.7, 0]} fontSize={0.25} color={color} fillOpacity={0.9} anchorX="center" anchorY="middle">
+        {text}
+      </Text>
+    </Float>
+  );
+}
 
-        return (
-          <Float 
-            key={i} 
-            speed={1 + Math.random() * 2} 
-            rotationIntensity={2} 
-            floatIntensity={3} 
-            position={[x, y, z]}
-          >
-            <Text
-              fontSize={0.6 + Math.random() * 0.3}
-              color={item.color}
-              font="https://fonts.gstatic.com/s/syncopate/v12/pe0sMIuPIYBCpEV5eFdCBfe_.woff"
-              anchorX="center"
-              anchorY="middle"
-            >
-              {item.text}
-              <meshStandardMaterial 
-                color="#ffffff" 
-                emissive={item.color} 
-                emissiveIntensity={2} 
-                toneMapped={false}
-              />
-            </Text>
-          </Float>
-        );
-      })}
+function FloatingTechNodes() {
+  return (
+    <group>
+      {TECH_NODES.map((node, i) => (
+        <TechNode key={i} {...node} />
+      ))}
     </group>
   );
 }
@@ -185,7 +179,7 @@ function App() {
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Suspense fallback={null}>
-            <FloatingTechSymbols />
+            <FloatingTechNodes />
             
             {/* Drastically reduce particles on mobile */}
             <Starfield count={isMobile ? 1200 : 5000} />
