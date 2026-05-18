@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Points, PointMaterial, Environment, Sparkles, Text } from '@react-three/drei';
-import { EffectComposer, Bloom, Glitch } from '@react-three/postprocessing';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as random from 'maath/random/dist/maath-random.esm';
 import './App.css';
 
@@ -115,8 +115,8 @@ function TechNode({ text, color, position, shape }) {
           fillOpacity={1} 
           anchorX="center" 
           anchorY="middle"
-          font="https://fonts.gstatic.com/s/syncopate/v12/pe0sMIuPIYBCpEV5eFdCBfe_m-w.woff"
           letterSpacing={0.1}
+          fontWeight="bold"
         >
           {text}
         </Text>
@@ -202,13 +202,6 @@ function App() {
             {!isMobile && (
               <EffectComposer>
                 <Bloom luminanceThreshold={1} intensity={1.2} />
-                <Glitch 
-                  delay={[2, 5]} 
-                  duration={[0.1, 0.3]} 
-                  strength={[0.01, 0.03]} 
-                  active 
-                  ratio={0.85} 
-                />
               </EffectComposer>
             )}
           </Suspense>
