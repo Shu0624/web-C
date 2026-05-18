@@ -89,38 +89,69 @@ function BackgroundStars({ count = 2000 }) {
   );
 }
 
-// The dense, tilted galaxy wave
+// The dense, tilted Torus galaxy ring
 function NebulaCore({ count = 3000 }) {
   const ref = useRef();
-  const positions = React.useMemo(() => random.inSphere(new Float32Array(count * 3), { radius: 5 }), [count]);
+  const positions = React.useMemo(() => {
+    const arr = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      // 70% of particles form the distinct dense ring
+      if (i < count * 0.7) {
+        const angle = Math.random() * Math.PI * 2;
+        // torus radius 4, tube thickness ~0.8
+        const radius = 4 + (Math.random() * 0.8 - 0.4);
+        arr[i * 3] = Math.cos(angle) * radius + (Math.random() - 0.5) * 0.5;
+        arr[i * 3 + 1] = (Math.random() - 0.5) * 0.5;
+        arr[i * 3 + 2] = Math.sin(angle) * radius + (Math.random() - 0.5) * 0.5;
+      } else {
+        // 30% form a wider scattered dust cloud
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 8; 
+        arr[i * 3] = Math.cos(angle) * radius + (Math.random() - 0.5) * 2;
+        arr[i * 3 + 1] = (Math.random() - 0.5) * 1.5;
+        arr[i * 3 + 2] = Math.sin(angle) * radius + (Math.random() - 0.5) * 2;
+      }
+    }
+    return arr;
+  }, [count]);
 
   useFrame((state, delta) => {
-    ref.current.rotation.y += delta * 0.05; // Spin on Y axis like a galaxy
+    ref.current.rotation.y += delta * 0.05; // Spin slowly
   });
 
   return (
-    // Positioned right, stretched wide in X and Z, squished in Y to form a disk, tilted.
-    <group position={[3, 0, -3]} rotation={[0.3, 0, -0.2]} scale={[3, 0.4, 3]}>
+    // Positioned right, tilted perfectly to show the Torus ring shape
+    <group position={[2.5, 0, -3]} rotation={[0.6, 0, -0.2]}>
       <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color="#ffffff" size={0.04} sizeAttenuation depthWrite={false} opacity={0.8} />
+        <PointMaterial transparent color="#ffffff" size={0.035} sizeAttenuation depthWrite={false} opacity={0.8} />
       </Points>
     </group>
   );
 }
 
-// Colored accent particles (glowing blue/purple)
+// Colored accent particles
 function AccentParticles({ count = 500 }) {
   const ref = useRef();
-  const positions = React.useMemo(() => random.inSphere(new Float32Array(count * 3), { radius: 6 }), [count]);
+  const positions = React.useMemo(() => {
+    const arr = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 4 + (Math.random() * 2 - 1); // loosely follow the ring
+      arr[i * 3] = Math.cos(angle) * radius + (Math.random() - 0.5) * 1;
+      arr[i * 3 + 1] = (Math.random() - 0.5) * 1;
+      arr[i * 3 + 2] = Math.sin(angle) * radius + (Math.random() - 0.5) * 1;
+    }
+    return arr;
+  }, [count]);
 
   useFrame((state, delta) => {
-    ref.current.rotation.y += delta * 0.03;
+    ref.current.rotation.y += delta * 0.04;
   });
 
   return (
-    <group position={[2, 0, -2]} rotation={[0.3, 0, -0.2]} scale={[2.8, 0.6, 2.8]}>
+    <group position={[2.5, 0, -3]} rotation={[0.6, 0, -0.2]}>
       <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color={[1.5, 0.8, 3]} size={0.05} sizeAttenuation depthWrite={false} opacity={0.9} />
+        <PointMaterial transparent color={[1.2, 0.6, 3]} size={0.05} sizeAttenuation depthWrite={false} opacity={0.9} />
       </Points>
     </group>
   );
