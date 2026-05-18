@@ -246,9 +246,10 @@ function App() {
                 <motion.div
                   key={event.id}
                   className="event-row"
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  initial={{ opacity: 0, y: isMobile ? 30 : 0, x: isMobile ? 0 : -30 }}
+                  whileInView={{ opacity: 1, y: 0, x: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, delay: isMobile ? 0 : index * 0.1, ease: "easeOut" }}
                   whileHover={{ backgroundColor: "rgba(25, 25, 25, 0.8)", borderColor: "rgba(255, 255, 255, 0.08)" }}
                 >
                   <div className="event-col-number syncopate">{event.number}</div>
