@@ -4,7 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Sparkles, Float } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as random from 'maath/random/dist/maath-random.esm';
-import { ReactLenis } from '@studio-freight/lenis/react';
+import { ReactLenis } from 'lenis/react';
 import gsap from 'gsap';
 import './App.css';
 
@@ -308,9 +308,6 @@ function App() {
           <Canvas camera={{ position: [0, 0, 5] }} dpr={[1, 1.5]}>
             <ambientLight intensity={0.3} />
             <Suspense fallback={null}>
-              {/* Rotating geometric crystal in center */}
-              <GlowingCrystal />
-
               {/* Multi-layer nebula cluster */}
             <NebulaCore count={isMobile ? 800 : 2500} />
             <BackgroundStars count={isMobile ? 500 : 1500} />
