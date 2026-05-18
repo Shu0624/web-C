@@ -8,31 +8,62 @@ import './App.css';
 const EVENTS = [
   {
     id: 1,
-    title: 'ONLINE CODING PLATFORM',
-    category: 'Technical',
-    description: 'Battle algorithms and data structures in real-time. A rigorous test of logic, optimization, and speed against top coders.',
-    number: '01'
+    title: 'Online Coding Platform',
+    category: 'TECHNICAL',
+    description: 'A leaderboard-driven coding round for speed, accuracy, and calm problem solving under pressure.',
+    number: '01',
+    icon: (
+      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 30L40 20L90 35L60 45L10 30Z" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)"/>
+        <path d="M20 40L50 30L80 40L50 50L20 40Z" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)"/>
+        <circle cx="50" cy="50" r="3" fill="#34d399" />
+        <circle cx="70" cy="60" r="2" fill="#f43f5e" />
+      </svg>
+    )
   },
   {
     id: 2,
-    title: 'BLIND CODING',
-    category: 'Technical',
-    description: 'Code with your monitors turned off. Rely entirely on your mental compiler, syntax mastery, and absolute focus.',
-    number: '02'
+    title: 'Blind Coding',
+    category: 'TECHNICAL',
+    description: 'Participants write, reason, and debug with limited visual feedback. Clean logic wins over trial and error.',
+    number: '02',
+    icon: (
+      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="20" width="40" height="40" rx="4" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)"/>
+        <path d="M10 50Q50 20 90 60" stroke="#fb923c" strokeWidth="2" fill="none"/>
+        <line x1="20" y1="60" x2="80" y2="40" stroke="#f43f5e" strokeWidth="2"/>
+      </svg>
+    )
   },
   {
     id: 3,
-    title: 'STARTUP PITCH',
-    category: 'Non-Technical',
-    description: 'Present your disruptive ideas to industry veterans. Sell your vision, demonstrate market fit, and secure the mock funding.',
-    number: '03'
+    title: 'Startup Pitch',
+    category: 'NON-TECHNICAL',
+    description: 'Teams turn a campus-scale problem into a crisp business pitch, then defend it in front of the jury.',
+    number: '03',
+    icon: (
+      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 40L50 30L80 40L50 50L20 40Z" stroke="#fb923c" strokeWidth="2" fill="rgba(251, 146, 60, 0.1)"/>
+        <rect x="40" y="45" width="20" height="20" stroke="#f43f5e" strokeWidth="2" fill="rgba(244, 63, 94, 0.1)"/>
+        <path d="M30 20Q50 10 70 30" stroke="#34d399" strokeWidth="2" fill="none"/>
+      </svg>
+    )
   },
   {
     id: 4,
-    title: 'E-SPORTS',
-    category: 'Non-Technical',
-    description: 'Enter the arena. Compete in high-stakes matches requiring split-second reflexes, strategic teamwork, and pure skill.',
-    number: '04'
+    title: 'E-Sports',
+    category: 'NON-TECHNICAL',
+    description: 'A high-energy competitive arena for squads, strategy, communication, and clutch moments.',
+    number: '04',
+    icon: (
+      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 60C10 60 10 30 50 30C90 30 90 60 80 60C70 60 70 50 50 50C30 50 30 60 20 60Z" stroke="#a3e635" strokeWidth="2" fill="rgba(163, 230, 53, 0.1)"/>
+        <circle cx="30" cy="45" r="3" fill="#60a5fa" />
+        <circle cx="70" cy="45" r="3" fill="#fb923c" />
+        <line x1="45" y1="45" x2="55" y2="45" stroke="#fff" strokeWidth="2"/>
+        <line x1="50" y1="40" x2="50" y2="50" stroke="#fff" strokeWidth="2"/>
+      </svg>
+    )
   }
 ];
 
@@ -186,21 +217,29 @@ function App() {
               OUR MANIFESTO
             </motion.h2>
             
-            <div className="events-grid">
+            <div className="events-list">
               {EVENTS.map((event, index) => (
                 <motion.div 
                   key={event.id}
-                  className="event-card glass-panel"
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  className="event-row"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ y: -10, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
+                  whileHover={{ backgroundColor: "rgba(25, 25, 25, 0.8)", borderColor: "rgba(255, 255, 255, 0.08)" }}
                 >
-                  <div className="event-number syncopate">{event.number}</div>
-                  <div className="event-category">{event.category}</div>
-                  <h3 className="event-title">{event.title}</h3>
-                  <p className="event-desc">{event.description}</p>
-                  <button className="explore-btn syncopate">EXPLORE &rarr;</button>
+                  <div className="event-col-number syncopate">{event.number}</div>
+                  <div className="event-col-title">
+                    <div className="event-category" style={{ color: event.category === 'TECHNICAL' ? '#34d399' : '#10b981' }}>
+                      {event.category}
+                    </div>
+                    <h3 className="event-title">{event.title}</h3>
+                  </div>
+                  <div className="event-col-desc">
+                    <p className="event-desc">{event.description}</p>
+                  </div>
+                  <div className="event-col-visual">
+                    {event.icon}
+                  </div>
                 </motion.div>
               ))}
             </div>
