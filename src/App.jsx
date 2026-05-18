@@ -68,43 +68,7 @@ const EVENTS = [
   }
 ];
 
-function GlowingCrystal() {
-  const mesh = useRef();
-  
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    if (mesh.current) {
-      mesh.current.rotation.y = t * 0.2;
-      mesh.current.rotation.x = t * 0.1;
-    }
-  });
 
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <mesh ref={mesh}>
-        <octahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial 
-          color="#3b82f6" 
-          emissive="#1d4ed8"
-          emissiveIntensity={3}
-          wireframe
-        />
-      </mesh>
-      <mesh>
-        <octahedronGeometry args={[0.8, 0]} />
-        <meshPhysicalMaterial
-          color="#ffffff"
-          transmission={1}
-          roughness={0}
-          thickness={0.5}
-          envMapIntensity={2}
-          clearcoat={1}
-          clearcoatRoughness={0}
-        />
-      </mesh>
-    </Float>
-  );
-}
 
 function Starfield({ count = 5000 }) {
   const ref = useRef();
@@ -112,17 +76,8 @@ function Starfield({ count = 5000 }) {
   const sphere = React.useMemo(() => random.inSphere(new Float32Array(count), { radius: 10 }), [count]);
 
   useFrame((state, delta) => {
-    // Base continuous rotation
-    ref.current.rotation.x -= delta / 15;
-    ref.current.rotation.y -= delta / 20;
-
-    // Interactive mouse tracking
-    const targetX = (state.pointer.y * Math.PI) / 8;
-    const targetY = (state.pointer.x * Math.PI) / 8;
-    
-    // Smooth interpolation towards mouse position
-    ref.current.rotation.x += 0.05 * (targetX - ref.current.rotation.x);
-    ref.current.rotation.y += 0.05 * (targetY - ref.current.rotation.y);
+    ref.current.rotation.x -= delta / 10;
+    ref.current.rotation.y -= delta / 15;
   });
 
   return (
@@ -170,8 +125,6 @@ function App() {
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Suspense fallback={null}>
-            <GlowingCrystal />
-            
             {/* Drastically reduce particles on mobile */}
             <Starfield count={isMobile ? 1200 : 5000} />
             <Sparkles count={isMobile ? 40 : 150} scale={12} size={isMobile ? 5 : 3} speed={0.4} opacity={1} color={[1, 1.5, 3]} />
