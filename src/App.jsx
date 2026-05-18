@@ -69,13 +69,11 @@ const EVENTS = [
 ];
 
 const TECH_NODES = [
-  { text: 'GITHUB', color: '#ffffff', pos: [-4, 2, -2], shape: 'box' },
-  { text: 'JAVA', color: '#f89820', pos: [4, 1, -1], shape: 'sphere' },
-  { text: 'PYTHON', color: '#3776ab', pos: [-3, -2, 0], shape: 'icosahedron' },
-  { text: 'C++', color: '#00599c', pos: [3, -2, -2], shape: 'octahedron' },
-  { text: 'REACT', color: '#61dafb', pos: [0, 3, -3], shape: 'torus' },
-  { text: 'NODE.JS', color: '#339933', pos: [0, -3, -1], shape: 'box' },
-  { text: 'GIT', color: '#f14e32', pos: [4.5, 3, -2], shape: 'icosahedron' },
+  { text: 'JAVA', color: '#f89820', position: [4, 1.5, -2], shape: 'sphere' },
+  { text: 'PYTHON', color: '#3776ab', position: [-3, -2, -1], shape: 'icosahedron' },
+  { text: 'C++', color: '#00599c', position: [3, -2.5, -3], shape: 'octahedron' },
+  { text: 'REACT', color: '#61dafb', position: [-4, 2.5, -2], shape: 'torus' },
+  { text: 'GIT', color: '#f14e32', position: [0, 3.5, -4], shape: 'icosahedron' },
 ];
 
 function TechNode({ text, color, position, shape }) {
