@@ -344,6 +344,10 @@
     gap: 1rem;
     padding: 1.5rem;
     text-align: left;
+    backdrop-filter: none; /* Disable expensive blur on mobile */
+    -webkit-backdrop-filter: none;
+    background-color: rgba(20, 20, 20, 0.95); /* Make it darker to compensate for lack of blur */
+    will-change: transform, opacity;
   }
 
   .event-col-number {

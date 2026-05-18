@@ -249,7 +249,7 @@ function App() {
                   initial={{ opacity: 0, y: isMobile ? 30 : 0, x: isMobile ? 0 : -30 }}
                   whileInView={{ opacity: 1, y: 0, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: isMobile ? 0 : index * 0.1, ease: "easeOut" }}
+                  transition={{ type: "spring", stiffness: 60, damping: 15, delay: isMobile ? 0 : index * 0.1 }}
                   whileHover={{ backgroundColor: "rgba(25, 25, 25, 0.8)", borderColor: "rgba(255, 255, 255, 0.08)" }}
                 >
                   <div className="event-col-number syncopate">{event.number}</div>
