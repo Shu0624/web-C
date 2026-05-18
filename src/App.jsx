@@ -125,7 +125,9 @@ function App() {
 
       <nav className="fixed-nav">
         <div className="logo syncopate">
-          <img src="/cse-logo.png" alt="CSE Logo" className="nav-logo" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="12 2 2 22 22 22"></polygon>
+          </svg>
           NEXUS '26
         </div>
         <div className="nav-links syncopate">
