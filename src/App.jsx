@@ -89,28 +89,45 @@ function BackgroundStars({ count = 2000 }) {
   );
 }
 
-// The dense, tilted Torus galaxy ring
-function NebulaCore({ count = 3000 }) {
+// A dense, organic twisted galaxy matching Techkriti
+function NebulaCore({ count = 4000 }) {
   const ref = useRef();
   const positions = React.useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      // 70% of particles form the distinct dense ring
-      if (i < count * 0.7) {
-        const angle = Math.random() * Math.PI * 2;
-        // torus radius 4, tube thickness ~0.8
-        const radius = 4 + (Math.random() * 0.8 - 0.4);
-        arr[i * 3] = Math.cos(angle) * radius + (Math.random() - 0.5) * 0.5;
-        arr[i * 3 + 1] = (Math.random() - 0.5) * 0.5;
-        arr[i * 3 + 2] = Math.sin(angle) * radius + (Math.random() - 0.5) * 0.5;
-      } else {
-        // 30% form a wider scattered dust cloud
-        const angle = Math.random() * Math.PI * 2;
-        const radius = Math.random() * 8; 
-        arr[i * 3] = Math.cos(angle) * radius + (Math.random() - 0.5) * 2;
-        arr[i * 3 + 1] = (Math.random() - 0.5) * 1.5;
-        arr[i * 3 + 2] = Math.sin(angle) * radius + (Math.random() - 0.5) * 2;
-      }
+      // Create a thick, hollow sphere (donut-like) that gets sparser outwards
+      const u = Math.random();
+      const v = Math.random();
+      const theta = u * 2.0 * Math.PI;
+      const phi = Math.acos(2.0 * v - 1.0);
+      
+      // We want a hole in the middle, so radius goes from 2.5 to 8
+      // Math.pow() skews the distribution towards the inner edge (dense core ring)
+      const r = 2.5 + Math.pow(Math.random(), 3) * 5.5; 
+      
+      // Convert to cartesian
+      let x = r * Math.sin(phi) * Math.cos(theta);
+      let y = r * Math.sin(phi) * Math.sin(theta);
+      let z = r * Math.cos(phi);
+      
+      // Squash it on the Y axis to make it a disk/fat donut
+      y = y * 0.3;
+
+      // Twist the galaxy to create spiral arms
+      const twist = r * 0.3; 
+      const twistedX = x * Math.cos(twist) - z * Math.sin(twist);
+      const twistedZ = x * Math.sin(twist) + z * Math.cos(twist);
+      x = twistedX;
+      z = twistedZ;
+      
+      // Add a tiny bit of random organic noise to break perfection
+      x += (Math.random() - 0.5) * 0.5;
+      y += (Math.random() - 0.5) * 0.5;
+      z += (Math.random() - 0.5) * 0.5;
+
+      arr[i * 3] = x;
+      arr[i * 3 + 1] = y;
+      arr[i * 3 + 2] = z;
     }
     return arr;
   }, [count]);
@@ -120,8 +137,8 @@ function NebulaCore({ count = 3000 }) {
   });
 
   return (
-    // Positioned right, tilted perfectly to show the Torus ring shape
-    <group position={[2.5, 0, -3]} rotation={[0.6, 0, -0.2]}>
+    // Positioned center-right, tilted to show the hollow center and organic sweep
+    <group position={[1.5, 0, -2]} rotation={[0.4, 0, -0.3]}>
       <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
         <PointMaterial transparent color="#ffffff" size={0.035} sizeAttenuation depthWrite={false} opacity={0.8} />
       </Points>
@@ -129,17 +146,30 @@ function NebulaCore({ count = 3000 }) {
   );
 }
 
-// Colored accent particles
+// Colored accent particles that follow the same twisted spiral
 function AccentParticles({ count = 500 }) {
   const ref = useRef();
   const positions = React.useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 4 + (Math.random() * 2 - 1); // loosely follow the ring
-      arr[i * 3] = Math.cos(angle) * radius + (Math.random() - 0.5) * 1;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 1;
-      arr[i * 3 + 2] = Math.sin(angle) * radius + (Math.random() - 0.5) * 1;
+      const u = Math.random();
+      const v = Math.random();
+      const theta = u * 2.0 * Math.PI;
+      const phi = Math.acos(2.0 * v - 1.0);
+      
+      const r = 2.5 + Math.pow(Math.random(), 2) * 6; 
+      
+      let x = r * Math.sin(phi) * Math.cos(theta);
+      let y = r * Math.sin(phi) * Math.sin(theta) * 0.3;
+      let z = r * Math.cos(phi);
+      
+      const twist = r * 0.3; 
+      const twistedX = x * Math.cos(twist) - z * Math.sin(twist);
+      const twistedZ = x * Math.sin(twist) + z * Math.cos(twist);
+      
+      arr[i * 3] = twistedX;
+      arr[i * 3 + 1] = y;
+      arr[i * 3 + 2] = twistedZ;
     }
     return arr;
   }, [count]);
@@ -149,7 +179,7 @@ function AccentParticles({ count = 500 }) {
   });
 
   return (
-    <group position={[2.5, 0, -3]} rotation={[0.6, 0, -0.2]}>
+    <group position={[1.5, 0, -2]} rotation={[0.4, 0, -0.3]}>
       <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
         <PointMaterial transparent color={[1.2, 0.6, 3]} size={0.05} sizeAttenuation depthWrite={false} opacity={0.9} />
       </Points>
