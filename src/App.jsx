@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Points, PointMaterial, Environment, Sparkles } from '@react-three/drei';
+import { Float, Points, PointMaterial, Environment, Sparkles, Text } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as random from 'maath/random/dist/maath-random.esm';
 import './App.css';
@@ -68,39 +68,65 @@ const EVENTS = [
   }
 ];
 
-function GlowingCrystal() {
-  const mesh = useRef();
+const techSymbols = [
+  { text: '</>', color: '#3b82f6' },
+  { text: 'git', color: '#f97316' },
+  { text: 'Java', color: '#ef4444' },
+  { text: 'Python', color: '#eab308' },
+  { text: 'C++', color: '#3b82f6' },
+  { text: '{ }', color: '#a855f7' },
+  { text: 'JS', color: '#eab308' },
+  { text: 'React', color: '#06b6d4' }
+];
 
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    mesh.current.rotation.y = t * 0.2;
-    mesh.current.rotation.x = t * 0.1;
+function FloatingTechSymbols() {
+  const groupRef = useRef();
+
+  useFrame((state, delta) => {
+    // Slowly rotate the entire cloud of symbols
+    groupRef.current.rotation.y += delta * 0.05;
+    groupRef.current.rotation.x += delta * 0.02;
   });
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <mesh ref={mesh}>
-        <octahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial
-          color="#3b82f6"
-          emissive="#1d4ed8"
-          emissiveIntensity={3}
-          wireframe
-        />
-      </mesh>
-      <mesh>
-        <octahedronGeometry args={[0.8, 0]} />
-        <meshPhysicalMaterial
-          color="#ffffff"
-          transmission={1}
-          roughness={0}
-          thickness={0.5}
-          envMapIntensity={2}
-          clearcoat={1}
-          clearcoatRoughness={0}
-        />
-      </mesh>
-    </Float>
+    <group ref={groupRef}>
+      {techSymbols.map((item, i) => {
+        // Distribute them in a pseudo-random sphere
+        const phi = Math.acos(-1 + (2 * i) / techSymbols.length);
+        const theta = Math.sqrt(techSymbols.length * Math.PI) * phi;
+        const radius = 2.5 + Math.random() * 1.5;
+        
+        const x = radius * Math.cos(theta) * Math.sin(phi);
+        const y = radius * Math.sin(theta) * Math.sin(phi);
+        const z = radius * Math.cos(phi);
+
+        return (
+          <Float 
+            key={i} 
+            speed={1 + Math.random() * 2} 
+            rotationIntensity={2} 
+            floatIntensity={3} 
+            position={[x, y, z]}
+          >
+            <Text
+              fontSize={0.6 + Math.random() * 0.3}
+              color={item.color}
+              font="https://fonts.gstatic.com/s/syncopate/v12/pe0sMIuPIYBCpEV5eFdCBfe_.woff"
+              anchorX="center"
+              anchorY="middle"
+            >
+              {item.text}
+              <meshStandardMaterial 
+                color="#ffffff" 
+                emissive={item.color} 
+                emissiveIntensity={2} 
+                toneMapped={false}
+              />
+            </Text>
+          </Float>
+        );
+      })}
+    </group>
   );
 }
 
@@ -159,7 +185,7 @@ function App() {
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Suspense fallback={null}>
-            <GlowingCrystal />
+            <FloatingTechSymbols />
             
             {/* Drastically reduce particles on mobile */}
             <Starfield count={isMobile ? 1200 : 5000} />
