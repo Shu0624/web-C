@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Points, PointMaterial, Environment, Sparkles } from '@react-three/drei';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as random from 'maath/random/dist/maath-random.esm';
 import './App.css';
 
@@ -83,7 +84,7 @@ function GlowingCrystal() {
         <meshStandardMaterial 
           color="#3b82f6" 
           emissive="#1d4ed8"
-          emissiveIntensity={2}
+          emissiveIntensity={3}
           wireframe
         />
       </mesh>
@@ -91,8 +92,8 @@ function GlowingCrystal() {
         <octahedronGeometry args={[0.8, 0]} />
         <meshStandardMaterial 
           color="#ffffff" 
-          emissive="#60a5fa"
-          emissiveIntensity={1}
+          emissive="#93c5fd"
+          emissiveIntensity={2}
           transparent
           opacity={0.8}
         />
@@ -113,7 +114,8 @@ function Starfield() {
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color="#fff" size={0.05} sizeAttenuation={true} depthWrite={false} />
+        {/* Using HDR colors [r, g, b] array with values > 1 to trigger bloom */}
+        <PointMaterial transparent color={[2, 2, 3]} size={0.06} sizeAttenuation={true} depthWrite={false} opacity={0.8} />
       </Points>
     </group>
   );
@@ -147,8 +149,13 @@ function App() {
           <Suspense fallback={null}>
             <GlowingCrystal />
             <Starfield />
-            <Sparkles count={100} scale={12} size={2} speed={0.4} opacity={0.5} color="#60a5fa" />
+            {/* Make the sparkles bright blue and intense to trigger bloom */}
+            <Sparkles count={150} scale={12} size={3} speed={0.4} opacity={1} color={[1, 1.5, 3]} />
             <Environment preset="night" />
+            
+            <EffectComposer>
+              <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} />
+            </EffectComposer>
           </Suspense>
         </Canvas>
       </div>
