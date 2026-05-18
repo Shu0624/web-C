@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Sparkles } from '@react-three/drei';
+import { Points, PointMaterial, Sparkles, Float } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as random from 'maath/random/dist/maath-random.esm';
+import { ReactLenis } from '@studio-freight/lenis/react';
+import gsap from 'gsap';
 import './App.css';
 
 const EVENTS = [
@@ -68,7 +70,87 @@ const EVENTS = [
   }
 ];
 
+function CinematicLoader({ onComplete }) {
+  const [progress, setProgress] = useState(0);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          setTimeout(onComplete, 800);
+          return 100;
+        }
+        return prev + Math.floor(Math.random() * 15) + 5;
+      });
+    }, 150);
+    return () => clearInterval(timer);
+  }, [onComplete]);
+
+  return (
+    <motion.div 
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#000000]"
+      initial={{ opacity: 1 }}
+      animate={{ opacity: progress === 100 ? 0 : 1 }}
+      transition={{ duration: 1, ease: "easeInOut", delay: 0.5 }}
+      style={{ pointerEvents: progress === 100 ? 'none' : 'auto' }}
+    >
+      <div className="relative w-64 h-1 bg-gray-900 rounded-full overflow-hidden">
+        <motion.div 
+          className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
+          initial={{ width: '0%' }}
+          animate={{ width: `${progress}%` }}
+          transition={{ ease: "circOut", duration: 0.2 }}
+        />
+      </div>
+      <motion.p 
+        className="mt-6 font-mono text-sm tracking-widest text-blue-400"
+        animate={{ opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        INITIALIZING NEXUS_ {progress}%
+      </motion.p>
+    </motion.div>
+  );
+}
+
+function GlowingCrystal() {
+  const mesh = useRef();
+  
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (mesh.current) {
+      mesh.current.rotation.y = t * 0.2;
+      mesh.current.rotation.x = t * 0.1;
+    }
+  });
+
+  return (
+    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
+      <mesh ref={mesh} position={[0, 0, 0]}>
+        <octahedronGeometry args={[1.2, 0]} />
+        <meshStandardMaterial 
+          color="#3b82f6" 
+          emissive="#1d4ed8"
+          emissiveIntensity={3}
+          wireframe
+        />
+      </mesh>
+      <mesh position={[0, 0, 0]}>
+        <octahedronGeometry args={[0.9, 0]} />
+        <meshPhysicalMaterial
+          color="#ffffff"
+          transmission={1}
+          roughness={0}
+          thickness={0.5}
+          envMapIntensity={2}
+          clearcoat={1}
+          clearcoatRoughness={0}
+        />
+      </mesh>
+    </Float>
+  );
+}
 
 // Full screen scattered stars
 function BackgroundStars({ count = 2000 }) {
@@ -190,6 +272,7 @@ function AccentParticles({ count = 500 }) {
 function App() {
   const [activeSection, setActiveSection] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Check if device is mobile for performance optimization
@@ -215,14 +298,20 @@ function App() {
   }, [activeSection]);
 
   return (
-    <div className="app-container">
-      {/* 3D WebGL Background replacing the video */}
-      <div className="video-background">
-        {/* Clamp dpr to 1.5 to save massive amounts of GPU overhead on high-density mobile screens */}
-        <Canvas camera={{ position: [0, 0, 5] }} dpr={[1, 1.5]}>
-          <ambientLight intensity={0.3} />
-          <Suspense fallback={null}>
-            {/* Multi-layer nebula cluster */}
+    <ReactLenis root options={{ lerp: 0.05, smoothWheel: true }}>
+      <div className="app-container">
+        {loading && <CinematicLoader onComplete={() => setLoading(false)} />}
+        
+        {/* 3D WebGL Background replacing the video */}
+        <div className="video-background">
+          {/* Clamp dpr to 1.5 to save massive amounts of GPU overhead on high-density mobile screens */}
+          <Canvas camera={{ position: [0, 0, 5] }} dpr={[1, 1.5]}>
+            <ambientLight intensity={0.3} />
+            <Suspense fallback={null}>
+              {/* Rotating geometric crystal in center */}
+              <GlowingCrystal />
+
+              {/* Multi-layer nebula cluster */}
             <NebulaCore count={isMobile ? 800 : 2500} />
             <BackgroundStars count={isMobile ? 500 : 1500} />
             {!isMobile && <AccentParticles count={300} />}
@@ -355,7 +444,8 @@ function App() {
         </section>
 
       </main>
-    </div>
+      </div>
+    </ReactLenis>
   );
 }
 
