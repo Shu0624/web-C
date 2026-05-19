@@ -368,7 +368,7 @@ function BackgroundStars({ count = 2500 }) {
 }
 
 // ============ MOUSE PARALLAX + CAMERA DRIFT ============
-function MouseParallaxCamera({ children }) {
+function MouseParallaxCamera({ children, isMobile }) {
   const groupRef = useRef();
   const mouse = useRef({ x: 0, y: 0 });
   const smooth = useRef({ x: 0, y: 0 });
@@ -389,9 +389,9 @@ function MouseParallaxCamera({ children }) {
     smooth.current.x += (mouse.current.x - smooth.current.x) * 0.05;
     smooth.current.y += (mouse.current.y - smooth.current.y) * 0.05;
 
-    // Galaxy tilt from mouse
+    // Galaxy tilt from mouse (0.3 base tilt to raise the back side)
     if (groupRef.current) {
-      groupRef.current.rotation.x = smooth.current.y * 0.2;
+      groupRef.current.rotation.x = 0.3 + smooth.current.y * 0.2;
       groupRef.current.rotation.z = smooth.current.x * 0.15;
     }
 
@@ -401,8 +401,10 @@ function MouseParallaxCamera({ children }) {
     camera.lookAt(0, 0, 0);
   });
 
-  // Shift galaxy 120 units to the right
-  return <group ref={groupRef} position={[120, -20, 0]}>{children}</group>;
+  // On desktop, shift right. On mobile, shift slightly right and up.
+  const pos = isMobile ? [40, -10, 0] : [120, -20, 0];
+  
+  return <group ref={groupRef} position={pos}>{children}</group>;
 }
 
 // ============ MAIN EXPORT ============
@@ -415,7 +417,7 @@ export default function GalaxyScene({ isMobile = false }) {
     <>
       <fog attach="fog" args={[0x030303, 0, 2000]} />
       <BackgroundStars count={starCount} />
-      <MouseParallaxCamera>
+      <MouseParallaxCamera isMobile={isMobile}>
         <SpiralParticles count={spiralCount} />
         <NodeDots count={nodeCount} />
       </MouseParallaxCamera>
