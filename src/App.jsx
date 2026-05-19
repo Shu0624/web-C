@@ -333,52 +333,79 @@ function App() {
           <div className="section-number syncopate">//02</div>
         </section>
 
-        <section className="footer-section" id="register">
-          <div className="footer-inner">
-            {/* CTA Block */}
-            <motion.div
-              className="footer-cta"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="footer-title-gold syncopate">WANT IN?<br />LET'S GO.</h2>
-              <p className="footer-tagline">Join 300+ students competing across 4 flagship events</p>
-              <button className="register-btn-gold syncopate" onClick={() => setShowRegister(true)}>REGISTER NOW</button>
-            </motion.div>
+        <section className="footer-section-studio" id="register">
+          <div className="footer-inner-studio">
+            <div className="footer-grid-studio">
+              {/* Column 1: Brand */}
+              <div className="footer-col-studio brand-col">
+                <div className="footer-logo-box">
+                  <span className="logo-text-box">NEXUS '26</span>
+                </div>
+                <p className="footer-italic-gold">Where code meets chaos.</p>
+                <p className="footer-desc-text">
+                  We forge experiences that push boundaries, ignite innovation, and redefine what's possible in the tech ecosystem.
+                </p>
+                <div className="footer-socials">
+                  <a href="#" className="social-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                  </a>
+                  <a href="#" className="social-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                  </a>
+                  <a href="#" className="social-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                  </a>
+                </div>
+              </div>
 
-            {/* Footer Grid */}
-            <div className="footer-grid">
-              <div className="footer-col">
-                <h4 className="footer-col-title">NEXUS '26</h4>
-                <p className="footer-col-text">The flagship tech fest bringing together coders, gamers, and innovators under one roof.</p>
+              {/* Column 2: Navigation */}
+              <div className="footer-col-studio">
+                <h4 className="footer-serif-title">Navigation</h4>
+                <a href="#home" className="footer-link-studio">Home</a>
+                <a href="#about" className="footer-link-studio">About</a>
+                <a href="#events" className="footer-link-studio">Events</a>
+                <a href="#register" className="footer-link-studio" onClick={(e) => { e.preventDefault(); setShowRegister(true); }}>Register</a>
+                <a href="#/admin" className="footer-link-studio">Admin</a>
               </div>
-              <div className="footer-col">
-                <h4 className="footer-col-title">EVENTS</h4>
-                <a href="#events" className="footer-link">Online Coding</a>
-                <a href="#events" className="footer-link">Blind Coding</a>
-                <a href="#events" className="footer-link">Startup Pitch</a>
-                <a href="#events" className="footer-link">E-Sports</a>
+
+              {/* Column 3: Services / Events */}
+              <div className="footer-col-studio">
+                <h4 className="footer-serif-title">Events</h4>
+                <a href="#events" className="footer-link-studio">Online Coding</a>
+                <a href="#events" className="footer-link-studio">Blind Coding</a>
+                <a href="#events" className="footer-link-studio">Startup Pitch</a>
+                <a href="#events" className="footer-link-studio">E-Sports</a>
               </div>
-              <div className="footer-col">
-                <h4 className="footer-col-title">QUICK LINKS</h4>
-                <a href="#home" className="footer-link">Home</a>
-                <a href="#about" className="footer-link">About</a>
-                <a href="#register" className="footer-link" onClick={(e) => { e.preventDefault(); setShowRegister(true); }}>Register</a>
-                <a href="#/admin" className="footer-link">Admin</a>
-              </div>
-              <div className="footer-col">
-                <h4 className="footer-col-title">CONNECT</h4>
-                <a href="#" className="footer-link">Instagram</a>
-                <a href="#" className="footer-link">Discord</a>
-                <a href="#" className="footer-link">Email Us</a>
+
+              {/* Column 4: Contact */}
+              <div className="footer-col-contact">
+                <h4 className="footer-serif-title">Get In Touch</h4>
+                
+                <div className="contact-block">
+                  <h5>Visit Us</h5>
+                  <p>Campus Auditorium, Tech Block<br/>New Delhi, India</p>
+                </div>
+                
+                <div className="contact-block">
+                  <h5>Phone</h5>
+                  <p>+91 98765 43210</p>
+                </div>
+                
+                <div className="contact-block">
+                  <h5>Event Dates</h5>
+                  <p>Oct 15 – Oct 17, 2026<br/>9:00 AM – 8:00 PM</p>
+                </div>
+                
+                <div className="contact-block">
+                  <h5>Email</h5>
+                  <p>nexus26@college.edu</p>
+                </div>
               </div>
             </div>
 
-            {/* Bottom Bar */}
-            <div className="footer-bottom">
-              <span>© 2026 NEXUS. All rights reserved.</span>
-              <span className="footer-credit">Crafted with 💜 for the next wave</span>
+            <div className="footer-bottom-studio">
+              <span>© 2026 NEXUS '26. All rights reserved.</span>
+              <span>College Tech Fest — New Delhi</span>
             </div>
           </div>
         </section>
