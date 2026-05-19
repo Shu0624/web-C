@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial, Sparkles, Float } from '@react-three/drei';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
-import * as random from 'maath/random/dist/maath-random.esm';
+import { Canvas } from '@react-three/fiber';
 import { ReactLenis } from 'lenis/react';
-import gsap from 'gsap';
+import GalaxyScene from './SpiralGalaxy';
 import './App.css';
 
 const EVENTS = [
@@ -114,146 +111,7 @@ function CinematicLoader({ onComplete }) {
   );
 }
 
-function GlowingCrystal() {
-  const mesh = useRef();
-  
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    if (mesh.current) {
-      mesh.current.rotation.y = t * 0.2;
-      mesh.current.rotation.x = t * 0.1;
-    }
-  });
-
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <mesh ref={mesh} position={[0, 0, 0]}>
-        <octahedronGeometry args={[1.2, 0]} />
-        <meshStandardMaterial 
-          color="#3b82f6" 
-          emissive="#1d4ed8"
-          emissiveIntensity={3}
-          wireframe
-        />
-      </mesh>
-      <mesh position={[0, 0, 0]}>
-        <octahedronGeometry args={[0.9, 0]} />
-        <meshPhysicalMaterial
-          color="#ffffff"
-          transmission={1}
-          roughness={0}
-          thickness={0.5}
-          envMapIntensity={2}
-          clearcoat={1}
-          clearcoatRoughness={0}
-        />
-      </mesh>
-    </Float>
-  );
-}
-
-// Full screen scattered stars
-function BackgroundStars({ count = 2000 }) {
-  const ref = useRef();
-  const positions = React.useMemo(() => random.inSphere(new Float32Array(count * 3), { radius: 15 }), [count]);
-  
-  useFrame((state, delta) => {
-    ref.current.rotation.x -= delta * 0.01;
-    ref.current.rotation.y -= delta * 0.02;
-  });
-
-  return (
-    <group>
-      <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color="#ffffff" size={0.02} sizeAttenuation depthWrite={false} opacity={0.4} />
-      </Points>
-    </group>
-  );
-}
-
-// A thin, sweeping 3D twisted ribbon of stars (Black hole ring)
-function NebulaCore({ count = 3000 }) {
-  const ref = useRef();
-  const positions = React.useMemo(() => {
-    const arr = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      
-      const R = 4; // Main radius
-
-      // Calculate base circle
-      let x = Math.cos(angle) * R;
-      let y = 0;
-      let z = Math.sin(angle) * R;
-
-      // Warp the circle into a 3D twisted ribbon (Pringles chip / Mobius look)
-      // This creates the distinct folded "black hole" edge
-      y += Math.sin(angle * 2) * 1.5; 
-      
-      // Make some stars tightly bound to the curve, others scattered in a thin disc
-      // Use Math.pow to heavily bias towards 0 (the central string)
-      const scatterBase = Math.pow(Math.random(), 4); 
-      const scatterRange = 1.5;
-      
-      arr[i * 3] = x + (Math.random() - 0.5) * scatterBase * scatterRange;
-      arr[i * 3 + 1] = y + (Math.random() - 0.5) * scatterBase * scatterRange * 0.5; // Flatter Y scatter
-      arr[i * 3 + 2] = z + (Math.random() - 0.5) * scatterBase * scatterRange;
-    }
-    return arr;
-  }, [count]);
-
-  useFrame((state, delta) => {
-    ref.current.rotation.y -= delta * 0.1; // Rotate the whole structure
-    // Add a very subtle breathing tilt
-    ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
-  });
-
-  return (
-    // Positioned right, heavily tilted to show off the folding rings
-    <group position={[2.5, 0, -2]} rotation={[0.8, 0.2, -0.4]} scale={[1.2, 1.2, 1.2]}>
-      <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color="#ffffff" size={0.03} sizeAttenuation depthWrite={false} opacity={0.8} />
-      </Points>
-    </group>
-  );
-}
-
-// Colored accent particles strictly following the same warped ribbon
-function AccentParticles({ count = 500 }) {
-  const ref = useRef();
-  const positions = React.useMemo(() => {
-    const arr = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const R = 4;
-      
-      let x = Math.cos(angle) * R;
-      let y = Math.sin(angle * 2) * 1.5;
-      let z = Math.sin(angle) * R;
-
-      const scatterBase = Math.pow(Math.random(), 2); 
-      const scatterRange = 2; // Slightly wider scatter for accents
-      
-      arr[i * 3] = x + (Math.random() - 0.5) * scatterBase * scatterRange;
-      arr[i * 3 + 1] = y + (Math.random() - 0.5) * scatterBase * scatterRange * 0.5;
-      arr[i * 3 + 2] = z + (Math.random() - 0.5) * scatterBase * scatterRange;
-    }
-    return arr;
-  }, [count]);
-
-  useFrame((state, delta) => {
-    ref.current.rotation.y -= delta * 0.1;
-    ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
-  });
-
-  return (
-    <group position={[2.5, 0, -2]} rotation={[0.8, 0.2, -0.4]} scale={[1.2, 1.2, 1.2]}>
-      <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-        <PointMaterial transparent color={[1.2, 0.6, 3]} size={0.05} sizeAttenuation depthWrite={false} opacity={0.9} />
-      </Points>
-    </group>
-  );
-}
+// 3D components moved to SpiralGalaxy.jsx
 
 function App() {
   const [activeSection, setActiveSection] = useState(0);
@@ -290,27 +148,16 @@ function App() {
         
         {/* 3D WebGL Background replacing the video */}
         <div className="video-background">
-          {/* Clamp dpr to 1.5 to save massive amounts of GPU overhead on high-density mobile screens */}
-          <Canvas camera={{ position: [0, 0, 5] }} dpr={[1, 1.5]}>
-            <ambientLight intensity={0.3} />
+          <Canvas
+            camera={{ position: [0, 50, 250], fov: 60 }}
+            dpr={[1, 2]}
+            gl={{ antialias: true, alpha: true, clearColor: 0x030303 }}
+          >
             <Suspense fallback={null}>
-              {/* Multi-layer nebula cluster */}
-            <NebulaCore count={isMobile ? 800 : 2500} />
-            <BackgroundStars count={isMobile ? 500 : 1500} />
-            {!isMobile && <AccentParticles count={300} />}
-            
-            {/* Bright sparkle highlights */}
-            <Sparkles count={isMobile ? 20 : 80} scale={14} size={isMobile ? 4 : 2.5} speed={0.3} opacity={0.8} color="#ffffff" />
-            
-            {/* Only run Bloom on Desktop */}
-            {!isMobile && (
-              <EffectComposer>
-                <Bloom luminanceThreshold={0.8} intensity={0.8} radius={0.6} />
-              </EffectComposer>
-            )}
-          </Suspense>
-        </Canvas>
-      </div>
+              <GalaxyScene isMobile={isMobile} />
+            </Suspense>
+          </Canvas>
+        </div>
       <div className="video-overlay"></div>
 
       <nav className="fixed-nav">
@@ -380,25 +227,30 @@ function App() {
               {EVENTS.map((event, index) => (
                 <motion.div
                   key={event.id}
-                  className="event-row"
-                  initial={{ opacity: 0, y: isMobile ? 30 : 0, x: isMobile ? 0 : -30 }}
-                  whileInView={{ opacity: 1, y: 0, x: 0 }}
+                  className="event-card"
+                  initial={{ opacity: 0, y: isMobile ? 30 : 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ type: "spring", stiffness: 60, damping: 15, delay: isMobile ? 0 : index * 0.1 }}
-                  whileHover={{ backgroundColor: "rgba(25, 25, 25, 0.8)", borderColor: "rgba(255, 255, 255, 0.08)" }}
                 >
-                  <div className="event-col-number syncopate">{event.number}</div>
-                  <div className="event-col-title">
-                    <div className="event-category" style={{ color: event.category === 'TECHNICAL' ? '#34d399' : '#10b981' }}>
-                      {event.category}
+                  <div className="event-card-glow"></div>
+                  <div className="event-card-header">
+                    <div className="event-col-number syncopate">{event.number}</div>
+                    <div className="event-col-visual">
+                      {event.icon}
                     </div>
-                    <h3 className="event-title">{event.title}</h3>
                   </div>
-                  <div className="event-col-desc">
-                    <p className="event-desc">{event.description}</p>
-                  </div>
-                  <div className="event-col-visual">
-                    {event.icon}
+                  
+                  <div className="event-card-content">
+                    <div className="event-col-title">
+                      <div className="event-category" style={{ color: event.category === 'TECHNICAL' ? '#60a5fa' : '#c084fc' }}>
+                        {event.category}
+                      </div>
+                      <h3 className="event-title">{event.title}</h3>
+                    </div>
+                    <div className="event-col-desc">
+                      <p className="event-desc">{event.description}</p>
+                    </div>
                   </div>
                 </motion.div>
               ))}
