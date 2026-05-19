@@ -14,6 +14,7 @@ const EVENTS = [
     category: 'TECHNICAL',
     description: 'You get a problem, you solve it, you climb the leaderboard. Simple as that. Think fast, code clean, and try not to panic when the timer hits zero.',
     number: '01',
+    link: 'https://forms.gle/YOUR_FORM_1',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10 30L40 20L90 35L60 45L10 30Z" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)" />
@@ -29,6 +30,7 @@ const EVENTS = [
     category: 'TECHNICAL',
     description: 'Imagine coding without seeing your output. No preview, no console — just you, your brain, and pure logic. Sounds terrifying? That\'s the point.',
     number: '02',
+    link: 'https://forms.gle/YOUR_FORM_2',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="30" y="20" width="40" height="40" rx="4" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)" />
@@ -43,6 +45,7 @@ const EVENTS = [
     category: 'NON-TECHNICAL',
     description: 'Got a wild idea that could actually work? Build a pitch around it and convince a panel of judges why it deserves to exist. Think Shark Tank, but on campus.',
     number: '03',
+    link: 'https://forms.gle/YOUR_FORM_3',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M20 40L50 30L80 40L50 50L20 40Z" stroke="#fb923c" strokeWidth="2" fill="rgba(251, 146, 60, 0.1)" />
@@ -51,22 +54,7 @@ const EVENTS = [
       </svg>
     )
   },
-  {
-    id: 4,
-    title: 'E-Sports',
-    category: 'NON-TECHNICAL',
-    description: 'Grab your squad and drop in. Whether it\'s Valorant, BGMI, or whatever gets your adrenaline going — it\'s time to prove who actually runs the server.',
-    number: '04',
-    icon: (
-      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 60C10 60 10 30 50 30C90 30 90 60 80 60C70 60 70 50 50 50C30 50 30 60 20 60Z" stroke="#a3e635" strokeWidth="2" fill="rgba(163, 230, 53, 0.1)" />
-        <circle cx="30" cy="45" r="3" fill="#60a5fa" />
-        <circle cx="70" cy="45" r="3" fill="#fb923c" />
-        <line x1="45" y1="45" x2="55" y2="45" stroke="#fff" strokeWidth="2" />
-        <line x1="50" y1="40" x2="50" y2="50" stroke="#fff" strokeWidth="2" />
-      </svg>
-    )
-  }
+
 ];
 
 function CinematicLoader({ onComplete }) {
@@ -167,7 +155,7 @@ function CinematicLoader({ onComplete }) {
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
-          INITIALIZING_NEXUS {Math.round(progress)}%
+          INITIALIZING_CODECRAFT {Math.round(progress)}%
         </motion.p>
       </div>
     </motion.div>
@@ -181,6 +169,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -241,18 +230,18 @@ function App() {
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polygon points="12 2 2 22 22 22"></polygon>
           </svg>
-          NEXUS '26
+          CODECRAFT
         </div>
         <div className="nav-links syncopate">
           <a href="#home">HOME</a>
           <a href="#about">ABOUT</a>
           <a href="#events">EVENTS</a>
-          <a href="#register" onClick={(e) => { e.preventDefault(); setShowRegister(true); }}>REGISTER</a>
+          <a href="#register" onClick={(e) => { e.preventDefault(); setSelectedEvent(''); setShowRegister(true); }}>REGISTER</a>
         </div>
       </nav>
 
       {/* Registration Modal */}
-      <RegistrationModal isOpen={showRegister} onClose={() => setShowRegister(false)} />
+      <RegistrationModal isOpen={showRegister} onClose={() => setShowRegister(false)} initialEvent={selectedEvent} />
 
       <main className="content-wrapper">
         <section className="viewport-section" id="home">
@@ -322,6 +311,15 @@ function App() {
                   </div>
                   <div className="event-row-center">
                     <p className="event-row-desc">{event.description}</p>
+                    <button 
+                      className="event-register-btn syncopate" 
+                      onClick={(e) => { 
+                        e.preventDefault(); 
+                        window.open(event.link, '_blank');
+                      }}
+                    >
+                      REGISTER NOW
+                    </button>
                   </div>
                   <div className="event-row-icon">
                     {event.icon}
@@ -333,79 +331,62 @@ function App() {
           <div className="section-number syncopate">//02</div>
         </section>
 
-        <section className="footer-section-studio" id="register">
-          <div className="footer-inner-studio">
-            <div className="footer-grid-studio">
-              {/* Column 1: Brand */}
-              <div className="footer-col-studio brand-col">
-                <div className="footer-logo-box">
-                  <span className="logo-text-box">NEXUS '26</span>
+        <section className="footer-section-modern" id="footer">
+          <div className="footer-inner-modern">
+            <div className="footer-top-modern">
+              <div className="footer-brand">
+                <div className="logo syncopate footer-logo">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="12 2 2 22 22 22"></polygon>
+                  </svg>
+                  CODECRAFT
                 </div>
-                <p className="footer-italic-gold">Where code meets chaos.</p>
-                <p className="footer-desc-text">
+                <p className="footer-tagline text-gradient">Where code meets chaos.</p>
+                <p className="footer-desc">
                   We forge experiences that push boundaries, ignite innovation, and redefine what's possible in the tech ecosystem.
                 </p>
                 <div className="footer-socials">
-                  <a href="#" className="social-circle">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                  <a href="#" className="social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                   </a>
-                  <a href="#" className="social-circle">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                  <a href="#" className="social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                   </a>
-                  <a href="#" className="social-circle">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                  <a href="#" className="social-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
                   </a>
                 </div>
               </div>
 
-              {/* Column 2: Navigation */}
-              <div className="footer-col-studio">
-                <h4 className="footer-serif-title">Navigation</h4>
-                <a href="#home" className="footer-link-studio">Home</a>
-                <a href="#about" className="footer-link-studio">About</a>
-                <a href="#events" className="footer-link-studio">Events</a>
-                <a href="#register" className="footer-link-studio" onClick={(e) => { e.preventDefault(); setShowRegister(true); }}>Register</a>
-                <a href="#/admin" className="footer-link-studio">Admin</a>
+              <div className="footer-links-group">
+                <h4 className="syncopate footer-heading">Navigation</h4>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#events">Events</a>
+                <a href="#register" onClick={(e) => { e.preventDefault(); setSelectedEvent(''); setShowRegister(true); }}>Register</a>
+                <a href="#/admin">Admin</a>
               </div>
 
-              {/* Column 3: Services / Events */}
-              <div className="footer-col-studio">
-                <h4 className="footer-serif-title">Events</h4>
-                <a href="#events" className="footer-link-studio">Online Coding</a>
-                <a href="#events" className="footer-link-studio">Blind Coding</a>
-                <a href="#events" className="footer-link-studio">Startup Pitch</a>
-                <a href="#events" className="footer-link-studio">E-Sports</a>
+              <div className="footer-links-group">
+                <h4 className="syncopate footer-heading">Events</h4>
+                <a href="#events">Online Coding</a>
+                <a href="#events">Blind Coding</a>
+                <a href="#events">Startup Pitch</a>
               </div>
 
-              {/* Column 4: Contact */}
-              <div className="footer-col-contact">
-                <h4 className="footer-serif-title">Get In Touch</h4>
-                
-                <div className="contact-block">
-                  <h5>Visit Us</h5>
-                  <p>Campus Auditorium, Tech Block<br/>New Delhi, India</p>
-                </div>
-                
-                <div className="contact-block">
-                  <h5>Phone</h5>
-                  <p>+91 98765 43210</p>
-                </div>
-                
-                <div className="contact-block">
-                  <h5>Event Dates</h5>
-                  <p>Oct 15 – Oct 17, 2026<br/>9:00 AM – 8:00 PM</p>
-                </div>
-                
-                <div className="contact-block">
-                  <h5>Email</h5>
-                  <p>nexus26@college.edu</p>
-                </div>
-              </div>
             </div>
 
-            <div className="footer-bottom-studio">
-              <span>© 2026 NEXUS '26. All rights reserved.</span>
-              <span>College Tech Fest — New Delhi</span>
+            <div className="footer-bottom-modern">
+              <div className="footer-bottom-left">
+                <p>© 2026 CODECRAFT. All rights reserved.</p>
+              </div>
+              <div className="footer-bottom-center">
+                <span className="designed-by">
+                  Website designed by <a href="https://www.linkedin.com/in/shubham-mhaske-96b585291/" target="_blank" rel="noopener noreferrer" style={{ color: '#a855f7', textDecoration: 'none', fontWeight: 500 }}>Shubham Mhaske</a>
+                </span>
+              </div>
+              <div className="footer-bottom-right">
+              </div>
             </div>
           </div>
         </section>

@@ -30,7 +30,7 @@ const registrationSchema = new mongoose.Schema({
   event: {
     type: String,
     required: [true, 'Event selection is required'],
-    enum: ['Online Coding Platform', 'Blind Coding', 'Startup Pitch', 'E-Sports'],
+    enum: ['Online Coding Platform', 'Blind Coding', 'Startup Pitch'],
   },
 }, {
   timestamps: true, // adds createdAt & updatedAt

@@ -77,7 +77,7 @@ export default function AdminPanel() {
     return (
       <div style={styles.page}>
         <div style={styles.loginBox}>
-          <h1 style={styles.loginTitle}>🔐 NEXUS Admin</h1>
+          <h1 style={styles.loginTitle}>🔐 CODECRAFT Admin</h1>
           <p style={styles.loginSub}>Enter admin credentials to continue</p>
           <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <input
@@ -104,7 +104,7 @@ export default function AdminPanel() {
   }
 
   // ─── DASHBOARD ───
-  const events = ['Online Coding Platform', 'Blind Coding', 'Startup Pitch', 'E-Sports'];
+  const events = ['Online Coding Platform', 'Blind Coding', 'Startup Pitch'];
   const getEventCount = (eventName) => {
     if (!stats) return 0;
     const found = stats.perEvent.find(e => e.event === eventName);
@@ -117,7 +117,7 @@ export default function AdminPanel() {
         {/* Header */}
         <div style={styles.header}>
           <div>
-            <h1 style={styles.dashTitle}>NEXUS '26 Admin</h1>
+            <h1 style={styles.dashTitle}>CODECRAFT Admin</h1>
             <p style={styles.dashSub}>Registration Dashboard</p>
           </div>
           <button onClick={() => { setAuthed(false); setPassword(''); setAdminId(''); }} style={styles.logoutBtn}>

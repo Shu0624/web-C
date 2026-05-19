@@ -6,8 +6,7 @@ const API_URL = 'http://localhost:5000/api';
 const EVENTS = [
   'Online Coding Platform',
   'Blind Coding',
-  'Startup Pitch',
-  'E-Sports',
+  'Startup Pitch'
 ];
 
 const BRANCHES = [
@@ -19,20 +18,25 @@ const BRANCHES = [
 const GOOGLE_FORM_LINKS = {
   'Online Coding Platform': 'https://forms.gle/YOUR_FORM_1',
   'Blind Coding': 'https://forms.gle/YOUR_FORM_2',
-  'Startup Pitch': 'https://forms.gle/YOUR_FORM_3',
-  'E-Sports': 'https://forms.gle/YOUR_FORM_4',
+  'Startup Pitch': 'https://forms.gle/YOUR_FORM_3'
 };
 
-export default function RegistrationModal({ isOpen, onClose }) {
+export default function RegistrationModal({ isOpen, onClose, initialEvent = '' }) {
   const [formData, setFormData] = useState({
     fullName: '',
     rollNo: '',
     branch: '',
     mobile: '',
-    event: '',
+    event: initialEvent,
   });
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const [message, setMessage] = useState('');
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setFormData(prev => ({ ...prev, event: initialEvent }));
+    }
+  }, [isOpen, initialEvent]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
