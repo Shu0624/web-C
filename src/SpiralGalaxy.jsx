@@ -397,11 +397,12 @@ function MouseParallaxCamera({ children }) {
 
     // Subtle camera drift
     camera.position.x = Math.sin(t * 0.1) * 10;
-    camera.position.y = 80 + Math.cos(t * 0.15) * 15;
+    camera.position.y = 50 + Math.cos(t * 0.15) * 15;
     camera.lookAt(0, 0, 0);
   });
 
-  return <group ref={groupRef}>{children}</group>;
+  // Shift galaxy 120 units to the right
+  return <group ref={groupRef} position={[120, -20, 0]}>{children}</group>;
 }
 
 // ============ MAIN EXPORT ============
