@@ -14,7 +14,7 @@ const EVENTS = [
     category: 'CODING',
     description: 'RANKING OPENS THE DOOR PROBLEM SOLVING WINS THE CROWN',
     number: '01',
-    link: 'https://forms.gle/YOUR_FORM_1',
+    link: 'https://forms.gle/QEdM3ysTPViCzdzP6',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10 30L40 20L90 35L60 45L10 30Z" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)" />
@@ -30,7 +30,7 @@ const EVENTS = [
     category: 'CODING',
     description: 'CODE FROM MEMORY WIN WITH PRECISION (MONITORS OFF BTW)',
     number: '02',
-    link: 'https://forms.gle/YOUR_FORM_2',
+    link: 'https://forms.gle/Y2xamDKEn1k83FwH7',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="30" y="20" width="40" height="40" rx="4" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)" />
@@ -74,7 +74,7 @@ const EVENTS = [
     category: 'STRATEGY',
     description: 'ONE CLOCK, ZERO MERCY BLITZ THE BOARD',
     number: '05',
-    link: 'https://forms.gle/YOUR_FORM_5',
+    link: 'https://forms.gle/85YHB4kfHhEntoH29',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="30" y="20" width="40" height="40" stroke="#a855f7" strokeWidth="2" fill="rgba(168, 85, 247, 0.1)" />
@@ -292,8 +292,15 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
+            <div className="college-badge syncopate">
+              CSMSS CHH. SHAHU COLLEGE OF ENGINEERING
+            </div>
             <h1 className="hero-title">THE NEXT<br />WAVE OF<br />INNOVATION</h1>
             <p className="hero-subtitle">Where code meets chaos and ideas turn real</p>
+            <div className="organizer-badge">
+              Organized by the Department of Computer Science & Engineering.<br />
+              <strong>29th May 2026</strong>
+            </div>
           </motion.div>
           <div className="scroll-indicator">
             <span className="syncopate">SCROLL TO EXPLORE</span>

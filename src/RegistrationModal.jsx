@@ -19,11 +19,11 @@ const BRANCHES = [
 
 // Google Form fallback links per event
 const GOOGLE_FORM_LINKS = {
-  'ONLINE CODE CHALLENGE': 'https://forms.gle/YOUR_FORM_1',
-  'ZERO VISION (BLIND CODE)': 'https://forms.gle/YOUR_FORM_2',
+  'ONLINE CODE CHALLENGE': 'https://forms.gle/QEdM3ysTPViCzdzP6',
+  'ZERO VISION (BLIND CODE)': 'https://forms.gle/Y2xamDKEn1k83FwH7',
   'MIND YOUR BUSINESS (STARTUP PITCH)': 'https://forms.gle/ep7hL7WeYRByESZK6',
   'SDG STORIES': 'https://forms.gle/YOUR_FORM_4',
-  'SPEED CHESS': 'https://forms.gle/YOUR_FORM_5',
+  'SPEED CHESS': 'https://forms.gle/85YHB4kfHhEntoH29',
   'BOX CRICKET': 'https://forms.gle/YOUR_FORM_6'
 };
 

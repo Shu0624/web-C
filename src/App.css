@@ -98,6 +98,34 @@
   letter-spacing: 0.05em;
 }
 
+.college-badge {
+  display: block;
+  color: #d946ef; /* Bright pink/magenta */
+  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.organizer-badge {
+  margin-top: 2rem;
+  padding: 1.2rem 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.organizer-badge strong {
+  color: #fff;
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 1.1em;
+}
+
 .scroll-indicator {
   position: absolute;
   bottom: 3rem;
