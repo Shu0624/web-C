@@ -4,9 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 const API_URL = 'http://localhost:5000/api';
 
 const EVENTS = [
-  'Online Coding Platform',
-  'Blind Coding',
-  'Startup Pitch'
+  'ONLINE CODE CHALLENGE',
+  'ZERO VISION (BLIND CODE)',
+  'MIND YOUR BUSINESS (STARTUP PITCH)',
+  'SDG STORIES',
+  'SPEED CHESS',
+  'BOX CRICKET'
 ];
 
 const BRANCHES = [
@@ -16,9 +19,12 @@ const BRANCHES = [
 
 // Google Form fallback links per event
 const GOOGLE_FORM_LINKS = {
-  'Online Coding Platform': 'https://forms.gle/YOUR_FORM_1',
-  'Blind Coding': 'https://forms.gle/YOUR_FORM_2',
-  'Startup Pitch': 'https://forms.gle/YOUR_FORM_3'
+  'ONLINE CODE CHALLENGE': 'https://forms.gle/YOUR_FORM_1',
+  'ZERO VISION (BLIND CODE)': 'https://forms.gle/YOUR_FORM_2',
+  'MIND YOUR BUSINESS (STARTUP PITCH)': 'https://forms.gle/ep7hL7WeYRByESZK6',
+  'SDG STORIES': 'https://forms.gle/YOUR_FORM_4',
+  'SPEED CHESS': 'https://forms.gle/YOUR_FORM_5',
+  'BOX CRICKET': 'https://forms.gle/YOUR_FORM_6'
 };
 
 export default function RegistrationModal({ isOpen, onClose, initialEvent = '' }) {
@@ -92,7 +98,7 @@ export default function RegistrationModal({ isOpen, onClose, initialEvent = '' }
           {/* Close button */}
           <button style={styles.closeBtn} onClick={onClose}>✕</button>
 
-          <h2 style={styles.title}>Register as Team Leader</h2>
+          <h2 style={styles.title}>Event Registration</h2>
           <p style={styles.subtitle}>Fill in your details to reserve your spot</p>
 
           {status === 'success' ? (

@@ -10,9 +10,9 @@ import './App.css';
 const EVENTS = [
   {
     id: 1,
-    title: 'Online Coding Platform',
-    category: 'TECHNICAL',
-    description: 'You get a problem, you solve it, you climb the leaderboard. Simple as that. Think fast, code clean, and try not to panic when the timer hits zero.',
+    title: 'ONLINE CODE CHALLENGE',
+    category: 'CODING',
+    description: 'RANKING OPENS THE DOOR PROBLEM SOLVING WINS THE CROWN',
     number: '01',
     link: 'https://forms.gle/YOUR_FORM_1',
     icon: (
@@ -26,14 +26,14 @@ const EVENTS = [
   },
   {
     id: 2,
-    title: 'Blind Coding',
-    category: 'TECHNICAL',
-    description: 'Imagine coding without seeing your output. No preview, no console — just you, your brain, and pure logic. Sounds terrifying? That\'s the point.',
+    title: 'ZERO VISION (BLIND CODE)',
+    category: 'CODING',
+    description: 'CODE FROM MEMORY WIN WITH PRECISION (MONITORS OFF BTW)',
     number: '02',
     link: 'https://forms.gle/YOUR_FORM_2',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="30" y="20" width="40" height="40" rx="4" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)" />
+        <rect x="30" y="20" width="40" height="40" rx="4" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)" />
         <path d="M10 50Q50 20 90 60" stroke="#fb923c" strokeWidth="2" fill="none" />
         <line x1="20" y1="60" x2="80" y2="40" stroke="#f43f5e" strokeWidth="2" />
       </svg>
@@ -41,11 +41,11 @@ const EVENTS = [
   },
   {
     id: 3,
-    title: 'Startup Pitch',
-    category: 'NON-TECHNICAL',
-    description: 'Got a wild idea that could actually work? Build a pitch around it and convince a panel of judges why it deserves to exist. Think Shark Tank, but on campus.',
+    title: 'MIND YOUR BUSINESS (STARTUP PITCH)',
+    category: 'INNOVATION',
+    description: 'BRAINS, BUSINESS AND BOLDNESS AND YOUR STARTUP JOURNEY STARTS',
     number: '03',
-    link: 'https://forms.gle/YOUR_FORM_3',
+    link: 'https://forms.gle/ep7hL7WeYRByESZK6',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M20 40L50 30L80 40L50 50L20 40Z" stroke="#fb923c" strokeWidth="2" fill="rgba(251, 146, 60, 0.1)" />
@@ -54,7 +54,49 @@ const EVENTS = [
       </svg>
     )
   },
-
+  {
+    id: 4,
+    title: 'SDG STORIES',
+    category: 'STRATEGY',
+    description: 'FILM THE FUTURE YOU WANT AND STORIES THAT MATTER',
+    number: '04',
+    link: 'https://forms.gle/YOUR_FORM_4',
+    icon: (
+      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="40" r="20" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)" />
+        <path d="M45 35L58 40L45 45V35Z" fill="#60a5fa" />
+      </svg>
+    )
+  },
+  {
+    id: 5,
+    title: 'SPEED CHESS',
+    category: 'STRATEGY',
+    description: 'ONE CLOCK, ZERO MERCY BLITZ THE BOARD',
+    number: '05',
+    link: 'https://forms.gle/YOUR_FORM_5',
+    icon: (
+      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="20" width="40" height="40" stroke="#a855f7" strokeWidth="2" fill="rgba(168, 85, 247, 0.1)" />
+        <rect x="30" y="20" width="20" height="20" fill="#a855f7" />
+        <rect x="50" y="40" width="20" height="20" fill="#a855f7" />
+      </svg>
+    )
+  },
+  {
+    id: 6,
+    title: 'BOX CRICKET',
+    category: 'ENTERTAINMENT',
+    description: 'TURN CLASSROOM INTO STADIUM AND COMPETE IN ACTION PACKED BOX-CRIC',
+    number: '06',
+    link: 'https://forms.gle/YOUR_FORM_6',
+    icon: (
+      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="70" cy="30" r="8" stroke="#f43f5e" strokeWidth="2" fill="rgba(244, 63, 94, 0.1)" />
+        <path d="M20 70L40 30L50 40L30 80Z" fill="#f43f5e" opacity="0.8"/>
+      </svg>
+    )
+  }
 ];
 
 function CinematicLoader({ onComplete }) {
@@ -236,7 +278,6 @@ function App() {
           <a href="#home">HOME</a>
           <a href="#about">ABOUT</a>
           <a href="#events">EVENTS</a>
-          <a href="#register" onClick={(e) => { e.preventDefault(); setSelectedEvent(''); setShowRegister(true); }}>REGISTER</a>
         </div>
       </nav>
 
@@ -251,7 +292,7 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h1 className="hero-title">THE NEXT WAVE<br />OF INNOVATION</h1>
+            <h1 className="hero-title">THE NEXT<br />WAVE OF<br />INNOVATION</h1>
             <p className="hero-subtitle">Where code meets chaos and ideas turn real</p>
           </motion.div>
           <div className="scroll-indicator">
@@ -304,7 +345,12 @@ function App() {
                   transition={{ type: "spring", stiffness: 60, damping: 15, delay: isMobile ? 0 : index * 0.08 }}
                 >
                   <div className="event-row-left">
-                    <div className="event-row-category" style={{ color: event.category === 'TECHNICAL' ? '#34d399' : '#c084fc' }}>
+                    <div className="event-row-category" style={{ 
+                      color: event.category === 'CODING' ? '#34d399' : 
+                             event.category === 'INNOVATION' ? '#fb923c' :
+                             event.category === 'STRATEGY' ? '#60a5fa' : 
+                             event.category === 'ENTERTAINMENT' ? '#f43f5e' : '#c084fc' 
+                    }}>
                       {event.category}
                     </div>
                     <h3 className="event-row-title">{event.title}</h3>
@@ -369,9 +415,12 @@ function App() {
 
               <div className="footer-links-group">
                 <h4 className="syncopate footer-heading">Events</h4>
-                <a href="#events">Online Coding</a>
-                <a href="#events">Blind Coding</a>
+                <a href="#events">Online Code Challenge</a>
+                <a href="#events">Zero Vision</a>
                 <a href="#events">Startup Pitch</a>
+                <a href="#events">SDG Stories</a>
+                <a href="#events">Speed Chess</a>
+                <a href="#events">Box Cricket</a>
               </div>
 
             </div>
