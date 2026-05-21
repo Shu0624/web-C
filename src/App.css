@@ -1,6 +1,7 @@
 .app-container {
   position: relative;
   width: 100%;
+  overflow-x: hidden;
 }
 
 .fixed-nav {
@@ -90,6 +91,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.9));
 }
 
 .hero-subtitle {
@@ -101,7 +103,7 @@
 .college-badge {
   display: block;
   color: #d946ef; /* Bright pink/magenta */
-  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
   letter-spacing: 0.15em;
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -114,7 +116,7 @@
   background: rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   color: rgba(255, 255, 255, 0.6);
-  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
   line-height: 1.6;
   max-width: 500px;
 }
@@ -471,9 +473,10 @@
     justify-content: flex-start;
   }
 
-  /* Center hero content vertically specifically for mobile */
+  /* Move hero content up specifically for mobile */
   #home.viewport-section {
-    justify-content: center;
+    justify-content: flex-start;
+    padding-top: 8rem;
   }
 
   .grid-container {
@@ -489,13 +492,24 @@
 
   .hero-title {
     font-size: clamp(2.5rem, 8vw, 4rem);
-    text-align: center;
+    text-align: left;
     letter-spacing: normal;
   }
 
   .hero-subtitle {
-    text-align: center;
+    text-align: left;
     font-size: 1rem;
+  }
+
+  .college-badge {
+    text-align: left;
+  }
+
+  .organizer-badge {
+    margin-left: 0;
+    margin-right: auto;
+    text-align: left;
+    padding: 1rem 0;
   }
 
   .section-number {
@@ -596,7 +610,12 @@
   }
 
   .footer-top-modern {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .footer-links-group {
+    align-items: flex-start;
+    text-align: left;
   }
 }

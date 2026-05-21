@@ -401,8 +401,8 @@ function MouseParallaxCamera({ children, isMobile }) {
     camera.lookAt(0, 0, 0);
   });
 
-  // On desktop, shift right. On mobile, shift slightly right and up.
-  const pos = isMobile ? [40, -10, 0] : [120, -20, 0];
+  // On desktop, shift right. On mobile, move down so it doesn't block text.
+  const pos = isMobile ? [20, -70, 0] : [120, -20, 0];
   
   return <group ref={groupRef} position={pos}>{children}</group>;
 }

@@ -60,7 +60,7 @@ const EVENTS = [
     category: 'STRATEGY',
     description: 'FILM THE FUTURE YOU WANT AND STORIES THAT MATTER',
     number: '04',
-    link: 'https://forms.gle/YOUR_FORM_4',
+    link: 'https://forms.gle/zLJgFN9GNFjDiVJw6',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="40" r="20" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)" />
@@ -89,7 +89,7 @@ const EVENTS = [
     category: 'ENTERTAINMENT',
     description: 'TURN CLASSROOM INTO STADIUM AND COMPETE IN ACTION PACKED BOX-CRIC',
     number: '06',
-    link: 'https://forms.gle/YOUR_FORM_6',
+    link: 'https://forms.gle/YwBZkJSwJStvxAWh6',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="70" cy="30" r="8" stroke="#f43f5e" strokeWidth="2" fill="rgba(244, 63, 94, 0.1)" />
@@ -272,7 +272,7 @@ function App() {
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polygon points="12 2 2 22 22 22"></polygon>
           </svg>
-          CODECRAFT
+          CODECRAFT 2026
         </div>
         <div className="nav-links syncopate">
           <a href="#home">HOME</a>
@@ -392,7 +392,7 @@ function App() {
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polygon points="12 2 2 22 22 22"></polygon>
                   </svg>
-                  CODECRAFT
+                  CODECRAFT 2026
                 </div>
                 <p className="footer-tagline text-gradient">Where code meets chaos.</p>
                 <p className="footer-desc">
