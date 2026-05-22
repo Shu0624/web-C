@@ -60,7 +60,7 @@ const EVENTS = [
     category: 'STRATEGY',
     description: 'FILM THE FUTURE YOU WANT AND STORIES THAT MATTER',
     number: '04',
-    link: 'https://forms.gle/zLJgFN9GNFjDiVJw6',
+    link: 'https://docs.google.com/forms/d/e/1FAIpQLSe1CoPjibSl4B8UhNMZjm4YCATtWUV0TGWgLJE9wyE7_YR62g/viewform?usp=header',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="40" r="20" stroke="#60a5fa" strokeWidth="2" fill="rgba(96, 165, 250, 0.1)" />

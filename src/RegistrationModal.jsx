@@ -22,7 +22,7 @@ const GOOGLE_FORM_LINKS = {
   'ONLINE CODE CHALLENGE': 'https://forms.gle/QEdM3ysTPViCzdzP6',
   'ZERO VISION (BLIND CODE)': 'https://forms.gle/Y2xamDKEn1k83FwH7',
   'MIND YOUR BUSINESS (STARTUP PITCH)': 'https://forms.gle/ep7hL7WeYRByESZK6',
-  'SDG STORIES': 'https://forms.gle/YOUR_FORM_4',
+  'SDG STORIES': 'https://docs.google.com/forms/d/e/1FAIpQLSe1CoPjibSl4B8UhNMZjm4YCATtWUV0TGWgLJE9wyE7_YR62g/viewform?usp=header',
   'SPEED CHESS': 'https://forms.gle/85YHB4kfHhEntoH29',
   'BOX CRICKET': 'https://forms.gle/YOUR_FORM_6'
 };
