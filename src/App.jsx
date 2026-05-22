@@ -15,6 +15,7 @@ const EVENTS = [
     description: 'RANKING OPENS THE DOOR PROBLEM SOLVING WINS THE CROWN',
     number: '01',
     link: 'https://forms.gle/QEdM3ysTPViCzdzP6',
+    rulebook: 'https://drive.google.com/file/d/1YZE_3b8jpFVdrC6TMhcXWwcWafr7cEht/view?usp=drive_link',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10 30L40 20L90 35L60 45L10 30Z" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)" />
@@ -472,6 +473,17 @@ function App() {
                   </div>
                   <div className="event-row-center">
                     <p className="event-row-desc">{event.description}</p>
+                    {event.rulebook && (
+                      <button 
+                        className="event-rulebook-btn syncopate" 
+                        onClick={(e) => { 
+                          e.preventDefault(); 
+                          window.open(event.rulebook, '_blank');
+                        }}
+                      >
+                        📋 RULE BOOK
+                      </button>
+                    )}
                     <button 
                       className="event-register-btn syncopate" 
                       onClick={(e) => { 
