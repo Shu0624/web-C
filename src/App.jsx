@@ -9,13 +9,29 @@ import './App.css';
 
 const EVENTS = [
   {
+    id: 0,
+    title: 'RULE BOOK',
+    category: 'RULES',
+    description: 'READ THE OFFICIAL GUIDELINES BEFORE YOU COMPETE — KNOW THE RULES, PLAY FAIR, WIN BIG',
+    number: '📋',
+    link: 'https://drive.google.com/file/d/1YZE_3b8jpFVdrC6TMhcXWwcWafr7cEht/view?usp=drive_link',
+    icon: (
+      <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="10" width="40" height="55" rx="4" stroke="#fbbf24" strokeWidth="2" fill="rgba(251, 191, 36, 0.08)" />
+        <line x1="38" y1="25" x2="62" y2="25" stroke="#fbbf24" strokeWidth="1.5" opacity="0.6" />
+        <line x1="38" y1="33" x2="58" y2="33" stroke="#fbbf24" strokeWidth="1.5" opacity="0.4" />
+        <line x1="38" y1="41" x2="55" y2="41" stroke="#fbbf24" strokeWidth="1.5" opacity="0.3" />
+        <path d="M45 50L48 53L56 45" stroke="#fbbf24" strokeWidth="2" fill="none" />
+      </svg>
+    )
+  },
+  {
     id: 1,
     title: 'ONLINE CODE CHALLENGE',
     category: 'CODING',
     description: 'RANKING OPENS THE DOOR PROBLEM SOLVING WINS THE CROWN',
     number: '01',
     link: 'https://forms.gle/QEdM3ysTPViCzdzP6',
-    rulebook: 'https://drive.google.com/file/d/1YZE_3b8jpFVdrC6TMhcXWwcWafr7cEht/view?usp=drive_link',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10 30L40 20L90 35L60 45L10 30Z" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)" />
@@ -465,7 +481,8 @@ function App() {
                       color: event.category === 'CODING' ? '#34d399' : 
                              event.category === 'INNOVATION' ? '#fb923c' :
                              event.category === 'STRATEGY' ? '#60a5fa' : 
-                             event.category === 'ENTERTAINMENT' ? '#f43f5e' : '#c084fc' 
+                             event.category === 'ENTERTAINMENT' ? '#f43f5e' :
+                             event.category === 'RULES' ? '#fbbf24' : '#c084fc' 
                     }}>
                       {event.category}
                     </div>
@@ -473,25 +490,14 @@ function App() {
                   </div>
                   <div className="event-row-center">
                     <p className="event-row-desc">{event.description}</p>
-                    {event.rulebook && (
-                      <button 
-                        className="event-rulebook-btn syncopate" 
-                        onClick={(e) => { 
-                          e.preventDefault(); 
-                          window.open(event.rulebook, '_blank');
-                        }}
-                      >
-                        📋 RULE BOOK
-                      </button>
-                    )}
                     <button 
-                      className="event-register-btn syncopate" 
+                      className={`${event.category === 'RULES' ? 'event-rulebook-btn' : 'event-register-btn'} syncopate`}
                       onClick={(e) => { 
                         e.preventDefault(); 
                         window.open(event.link, '_blank');
                       }}
                     >
-                      REGISTER NOW
+                      {event.category === 'RULES' ? '📋 VIEW RULE BOOK' : 'REGISTER NOW'}
                     </button>
                   </div>
                   <div className="event-row-icon">
