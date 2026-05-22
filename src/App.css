@@ -796,6 +796,13 @@
   justify-content: center;
 }
 
+.hod-card {
+  grid-column: 1 / -1;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 .faculty-card-glow {
   position: absolute;
   top: -50%;
