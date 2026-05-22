@@ -625,6 +625,132 @@
 }
 
 /* ═══════════════════════════════════════════════════════
+   LINK GENERATOR PANEL
+   ═══════════════════════════════════════════════════════ */
+
+.link-generator-panel {
+  position: relative;
+  z-index: 10;
+  max-width: 700px;
+  width: 100%;
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: rgba(15, 15, 20, 0.5);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+}
+
+.link-generator-panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.link-gen-title {
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: #d8b4fe;
+  margin-bottom: 0.4rem;
+}
+
+.link-gen-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 1.25rem;
+}
+
+.link-gen-input-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.link-gen-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.link-gen-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.link-gen-input:focus {
+  border-color: rgba(168, 85, 247, 0.4);
+  background: rgba(168, 85, 247, 0.05);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+}
+
+.link-gen-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(192, 160, 98, 0.15));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 8px;
+  color: #d8b4fe;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.link-gen-btn:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(192, 160, 98, 0.25));
+  border-color: rgba(168, 85, 247, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(168, 85, 247, 0.15);
+}
+
+.link-gen-result {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(52, 211, 153, 0.04);
+  border: 1px solid rgba(52, 211, 153, 0.15);
+  border-radius: 8px;
+}
+
+.link-gen-url {
+  flex: 1;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: rgba(52, 211, 153, 0.8);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.link-gen-copy {
+  padding: 0.5rem 1rem;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: 6px;
+  color: #34d399;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.link-gen-copy:hover {
+  background: rgba(52, 211, 153, 0.2);
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════
    PRINT STYLES
    ═══════════════════════════════════════════════════════ */
 
@@ -638,7 +764,8 @@
   .invitation-particles,
   .invitation-orb,
   .invitation-back-btn,
-  .invitation-actions {
+  .invitation-actions,
+  .link-generator-panel {
     display: none !important;
   }
 
@@ -751,6 +878,23 @@
   .inv-action-btn {
     justify-content: center;
     width: 100%;
+  }
+
+  .link-generator-panel {
+    padding: 1.5rem;
+  }
+
+  .link-gen-input-row {
+    flex-direction: column;
+  }
+
+  .link-gen-result {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .link-gen-copy {
+    text-align: center;
   }
 }
 

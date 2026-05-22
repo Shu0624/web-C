@@ -18,6 +18,11 @@ function InvitationCard() {
 
   const guestName = getGuestName();
 
+  // Link generator state
+  const [linkGenName, setLinkGenName] = useState('');
+  const [generatedLink, setGeneratedLink] = useState('');
+  const [linkCopied, setLinkCopied] = useState(false);
+
   // Animated star-field background
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -102,6 +107,20 @@ function InvitationCard() {
       navigator.clipboard.writeText(window.location.origin + '/#/invitation');
       alert('Link copied to clipboard!');
     }
+  };
+
+  const handleGenerateLink = () => {
+    if (!linkGenName.trim()) return;
+    const encoded = encodeURIComponent(linkGenName.trim());
+    const link = `${window.location.origin}/#/invitation?name=${encoded}`;
+    setGeneratedLink(link);
+    setLinkCopied(false);
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(generatedLink);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
   };
 
   return (
@@ -267,6 +286,35 @@ function InvitationCard() {
           SHARE
         </button>
       </div>
+
+      {/* Link Generator Panel */}
+      {!guestName && (
+        <div className={`link-generator-panel ${isVisible ? 'visible' : ''}`}>
+          <h3 className="link-gen-title syncopate">GENERATE PERSONALIZED LINKS</h3>
+          <p className="link-gen-desc">Type a guest's name to create their unique invitation link</p>
+          <div className="link-gen-input-row">
+            <input
+              type="text"
+              className="link-gen-input"
+              placeholder="e.g. Prof. N. Z. Patel"
+              value={linkGenName}
+              onChange={(e) => setLinkGenName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleGenerateLink()}
+            />
+            <button className="link-gen-btn syncopate" onClick={handleGenerateLink}>
+              GENERATE
+            </button>
+          </div>
+          {generatedLink && (
+            <div className="link-gen-result">
+              <code className="link-gen-url">{generatedLink}</code>
+              <button className="link-gen-copy syncopate" onClick={handleCopyLink}>
+                {linkCopied ? '✓ COPIED!' : 'COPY'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
