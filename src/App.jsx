@@ -91,7 +91,7 @@ const EVENTS = [
     category: 'STRATEGY',
     description: 'ONE CLOCK, ZERO MERCY BLITZ THE BOARD',
     number: '05',
-    link: 'https://forms.gle/85YHB4kfHhEntoH29',
+    link: 'https://forms.gle/8WeDd7ZP1aFrTLfQ9',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="30" y="20" width="40" height="40" stroke="#a855f7" strokeWidth="2" fill="rgba(168, 85, 247, 0.1)" />
