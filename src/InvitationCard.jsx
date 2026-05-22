@@ -225,7 +225,7 @@ function InvitationCard() {
                 </div>
                 <div className="highlight-text">
                   <span className="highlight-label">TIME</span>
-                  <span className="highlight-value syncopate">09:30 AM ONWARDS</span>
+                  <span className="highlight-value syncopate">10 AM ONWARDS</span>
                 </div>
               </div>
               <div className="highlight-item">
