@@ -7,6 +7,17 @@ function InvitationCard() {
   const canvasRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  // Parse guest name from URL: #/invitation?name=Dr. Rajesh Kumar
+  const getGuestName = () => {
+    const hash = window.location.hash;
+    const queryStart = hash.indexOf('?');
+    if (queryStart === -1) return '';
+    const params = new URLSearchParams(hash.substring(queryStart));
+    return params.get('name') || '';
+  };
+
+  const guestName = getGuestName();
+
   // Animated star-field background
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -82,13 +93,13 @@ function InvitationCard() {
         await navigator.share({
           title: 'CODECRAFT 2026 - Invitation',
           text: 'You are cordially invited to CODECRAFT 2026 — The Next Wave of Innovation! 29th May 2026 at CSMSS Chh. Shahu College of Engineering.',
-          url: window.location.href,
+          url: window.location.origin + '/#/invitation',
         });
       } catch (err) {
         // User cancelled
       }
     } else {
-      navigator.clipboard.writeText(window.location.href);
+      navigator.clipboard.writeText(window.location.origin + '/#/invitation');
       alert('Link copied to clipboard!');
     }
   };
@@ -144,7 +155,7 @@ function InvitationCard() {
                 <div className="invitation-address">
                   <p className="address-name">CSMSS Chh. Shahu College of Engineering</p>
                   <p className="address-line">Department of Computer Science & Engineering</p>
-                  <p className="address-line">Aurangabad, Maharashtra</p>
+                  <p className="address-line">Chh. Sambhajinagar, Maharashtra</p>
                 </div>
                 <div className="invitation-date syncopate">
                   May 29, 2026
@@ -154,7 +165,7 @@ function InvitationCard() {
 
             {/* Greeting */}
             <div className="invitation-greeting">
-              <p className="greeting-text">Dear Esteemed Guest,</p>
+              <p className="greeting-text">{guestName ? `Dear ${guestName},` : 'Dear Esteemed Guest,'}</p>
             </div>
 
             {/* Body */}
@@ -207,7 +218,7 @@ function InvitationCard() {
                 </div>
                 <div className="highlight-text">
                   <span className="highlight-label">VENUE</span>
-                  <span className="highlight-value syncopate">CSMSS COE CAMPUS</span>
+                  <span className="highlight-value syncopate">CSMSS CSE DEPT.</span>
                 </div>
               </div>
             </div>

@@ -343,7 +343,7 @@ function App() {
     // Check hash route for admin panel
     const checkHash = () => {
       setIsAdmin(window.location.hash === '#/admin');
-      setIsInvitation(window.location.hash === '#/invitation');
+      setIsInvitation(window.location.hash.startsWith('#/invitation'));
     };
     checkHash();
     window.addEventListener('hashchange', checkHash);
