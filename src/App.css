@@ -283,6 +283,27 @@
   color: #a855f7;
 }
 
+.event-problem-btn {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: #34d399;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+}
+
+.event-problem-btn:hover {
+  background: rgba(52, 211, 153, 0.2);
+  border-color: #34d399;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 211, 153, 0.15);
+}
+
 .event-row-icon {
   width: 100px;
   height: 80px;

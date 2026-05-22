@@ -49,6 +49,7 @@ const EVENTS = [
     description: 'CODE FROM MEMORY WIN WITH PRECISION (MONITORS OFF BTW)',
     number: '02',
     link: 'https://forms.gle/Y2xamDKEn1k83FwH7',
+    problemLink: 'https://drive.google.com/file/d/1tTwQjdx8Q3mI1yjQPGhiE_L1tXwO1EL4/view?usp=sharing',
     icon: (
       <svg width="100" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="30" y="20" width="40" height="40" rx="4" stroke="#34d399" strokeWidth="2" fill="rgba(52, 211, 153, 0.1)" />
@@ -508,6 +509,17 @@ function App() {
                     >
                       {event.category === 'RULES' ? '📋 VIEW RULE BOOK' : 'REGISTER NOW'}
                     </button>
+                    {event.problemLink && (
+                      <button 
+                        className="event-problem-btn syncopate"
+                        onClick={(e) => { 
+                          e.preventDefault(); 
+                          window.open(event.problemLink, '_blank');
+                        }}
+                      >
+                        📄 VIEW PROBLEM STATEMENTS
+                      </button>
+                    )}
                   </div>
                   <div className="event-row-icon">
                     {event.icon}
