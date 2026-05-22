@@ -5,6 +5,7 @@ import { ReactLenis } from 'lenis/react';
 import GalaxyScene from './SpiralGalaxy';
 import RegistrationModal from './RegistrationModal';
 import AdminPanel from './AdminPanel';
+import InvitationCard from './InvitationCard';
 import './App.css';
 
 const EVENTS = [
@@ -336,10 +337,14 @@ function App() {
   const [showRegister, setShowRegister] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isInvitation, setIsInvitation] = useState(false);
 
   useEffect(() => {
     // Check hash route for admin panel
-    const checkHash = () => setIsAdmin(window.location.hash === '#/admin');
+    const checkHash = () => {
+      setIsAdmin(window.location.hash === '#/admin');
+      setIsInvitation(window.location.hash === '#/invitation');
+    };
     checkHash();
     window.addEventListener('hashchange', checkHash);
 
@@ -369,6 +374,10 @@ function App() {
   // ─── ADMIN PANEL ROUTE ───
   if (isAdmin) {
     return <AdminPanel />;
+  }
+
+  if (isInvitation) {
+    return <InvitationCard />;
   }
 
   return (
