@@ -99,6 +99,106 @@ const EVENTS = [
   }
 ];
 
+const TIMELINE_DATA = [
+  {
+    time: 'MAY 22',
+    title: 'REGISTRATION STARTING',
+    category: 'GENERAL',
+    desc: 'The gates open. Secure your spot in the ultimate tech showdown.',
+  },
+  {
+    time: 'MAY 26',
+    title: 'REGISTRATION CLOSE',
+    category: 'GENERAL',
+    desc: 'Final call. Registrations officially close as we prepare for the main event.',
+  },
+  {
+    time: 'MAY 29 - 09:30 AM',
+    title: 'RIBBON CUTTING & INAUGURATION',
+    category: 'GENERAL',
+    desc: 'Grand opening ceremony, keynotes from distinguished speakers to kick off the fest.',
+  },
+  {
+    time: 'MAY 29 - 10:30 AM',
+    title: 'EVENTS BEGIN',
+    category: 'CODING & INNOVATION',
+    desc: 'Simultaneous kick-off for Online Code Challenge, Zero Vision (Blind Code), and Mind Your Business (Startup Pitch).',
+  },
+  {
+    time: 'MAY 29 - 11:00 AM',
+    title: 'PARALLEL EVENTS',
+    category: 'STRATEGY & ENTERTAINMENT',
+    desc: 'Action continues with SDG Stories, Speed Chess, and Box Cricket starting across venues.',
+  }
+];
+
+const FACULTY_COORDINATORS = [
+  {
+    name: 'PROF. N. Z. PATEL',
+    role: 'FACULTY COORDINATOR',
+    phone: '7709 822 232',
+    link: 'tel:+917709822232',
+  },
+  {
+    name: 'DR. S. V. KHIDSE',
+    role: 'FACULTY COORDINATOR',
+    phone: '78754 36556',
+    link: 'tel:+917875436556',
+  }
+];
+
+const STUDENT_COORDINATORS = [
+  {
+    event: 'ONLINE CODE CHALLENGE',
+    category: 'CODING',
+    leads: [
+      { name: 'Sarthak Dayma', phone: '7391991701', link: 'tel:+917391991701' },
+      { name: 'Mayur Vitekar', phone: '8080090032', link: 'tel:+918080090032' }
+    ]
+  },
+  {
+    event: 'ZERO VISION (BLIND CODE)',
+    category: 'CODING',
+    leads: [
+      { name: 'Prathamesh Shirsath', phone: '9322470325', link: 'tel:+919322470325' },
+      { name: 'Rushikesh Nirpal', phone: '9370090561', link: 'tel:+919370090561' }
+    ]
+  },
+  {
+    event: 'MIND YOUR BUSINESS (STARTUP PITCH)',
+    category: 'INNOVATION',
+    leads: [
+      { name: 'Prajwal Awhale', phone: '9373522350', link: 'tel:+919373522350' },
+      { name: 'Soham Bhale', phone: '9405696248', link: 'tel:+919405696248' }
+    ]
+  },
+  {
+    event: 'SDG STORIES',
+    category: 'STRATEGY',
+    leads: [
+      { name: 'Sumeet Dhangare', phone: '8421408304', link: 'tel:+918421408304' },
+      { name: 'Pawan Phuke', phone: '9011147962', link: 'tel:+919011147962' },
+      { name: 'Aditya Desale', phone: '9175516301', link: 'tel:+919175516301' }
+    ]
+  },
+  {
+    event: 'SPEED CHESS',
+    category: 'STRATEGY',
+    leads: [
+      { name: 'Shubham Mhaske', phone: '8767637586', link: 'tel:+918767637586' },
+      { name: 'Pratiksha Sonawane', phone: '7796016149', link: 'tel:+917796016149' }
+    ]
+  },
+  {
+    event: 'BOX CRICKET',
+    category: 'ENTERTAINMENT',
+    leads: [
+      { name: 'Ajay Gaware', phone: '9699545701', link: 'tel:+919699545701' },
+      { name: 'Prashik Dehere', phone: '8956821148', link: 'tel:+918956821148' }
+    ]
+  }
+];
+
 function CinematicLoader({ onComplete }) {
   const [progress, setProgress] = useState(0);
 
@@ -278,6 +378,8 @@ function App() {
           <a href="#home">HOME</a>
           <a href="#about">ABOUT</a>
           <a href="#events">EVENTS</a>
+          <a href="#timeline">SCHEDULE</a>
+          <a href="#crew">CONTACT</a>
         </div>
       </nav>
 
@@ -384,6 +486,144 @@ function App() {
           <div className="section-number syncopate">//02</div>
         </section>
 
+        {/* Timeline Section */}
+        <section className="viewport-section" id="timeline">
+          <div className="timeline-container">
+            <motion.h2
+              className="section-title text-center"
+              initial={{ opacity: 0, y: -30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              CHRONOLOGY OF EVENTS
+            </motion.h2>
+            <p className="timeline-subtitle text-center">Plan your attack strategy. The grand tech stage awaits.</p>
+            
+            <div className="timeline-track-wrapper">
+              <div className="timeline-line"></div>
+              
+              {TIMELINE_DATA.map((item, index) => (
+                <motion.div
+                  key={index}
+                  className={`timeline-node ${index % 2 === 0 ? 'left' : 'right'}`}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: isMobile ? 0 : index * 0.05 }}
+                >
+                  <div className="timeline-node-dot" style={{
+                    borderColor: item.category.includes('CODING') ? '#34d399' :
+                                 item.category.includes('INNOVATION') ? '#fb923c' :
+                                 item.category.includes('STRATEGY') ? '#60a5fa' :
+                                 item.category.includes('ENTERTAINMENT') ? '#f43f5e' : '#a855f7'
+                  }}></div>
+                  <div className="timeline-node-content">
+                    <span className="timeline-time syncopate">{item.time}</span>
+                    <h3 className="timeline-title syncopate" style={{
+                      color: item.category.includes('CODING') ? '#34d399' :
+                             item.category.includes('INNOVATION') ? '#fb923c' :
+                             item.category.includes('STRATEGY') ? '#60a5fa' :
+                             item.category.includes('ENTERTAINMENT') ? '#f43f5e' : '#fff'
+                    }}>{item.title}</h3>
+                    <p className="timeline-desc">{item.desc}</p>
+                    <span className="timeline-badge" style={{
+                      backgroundColor: item.category.includes('CODING') ? 'rgba(52, 211, 153, 0.1)' :
+                                       item.category.includes('INNOVATION') ? 'rgba(251, 146, 60, 0.1)' :
+                                       item.category.includes('STRATEGY') ? 'rgba(96, 165, 250, 0.1)' :
+                                       item.category.includes('ENTERTAINMENT') ? 'rgba(244, 63, 94, 0.1)' : 'rgba(168, 85, 247, 0.1)',
+                      color: item.category.includes('CODING') ? '#34d399' :
+                             item.category.includes('INNOVATION') ? '#fb923c' :
+                             item.category.includes('STRATEGY') ? '#60a5fa' :
+                             item.category.includes('ENTERTAINMENT') ? '#f43f5e' : '#a855f7'
+                    }}>{item.category}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          <div className="section-number syncopate">//03</div>
+        </section>
+
+        {/* Crew / Contact Section */}
+        <section className="viewport-section" id="crew">
+          <div className="crew-container">
+            <motion.h2
+              className="section-title text-center"
+              initial={{ opacity: 0, y: -30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              STEERING COMMITTEE & CRUISE CREW
+            </motion.h2>
+            <p className="crew-subtitle text-center">Get in touch with our event marshals for queries and configurations.</p>
+            
+            {/* Faculty Section */}
+            <div className="faculty-grid">
+              {FACULTY_COORDINATORS.map((fac, idx) => (
+                <motion.div
+                  key={idx}
+                  className="faculty-card"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", stiffness: 100, delay: idx * 0.1 }}
+                >
+                  <div className="faculty-card-glow"></div>
+                  <div className="faculty-info">
+                    <span className="faculty-role syncopate">{fac.role}</span>
+                    <h3 className="faculty-name syncopate">{fac.name}</h3>
+                    <a href={fac.link} className="faculty-phone syncopate">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      {fac.phone}
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <h3 className="student-crew-title syncopate text-center">STUDENT EVENT CONVENERS</h3>
+
+            {/* Student Grid */}
+            <div className="student-grid">
+              {STUDENT_COORDINATORS.map((std, idx) => (
+                <motion.div
+                  key={idx}
+                  className="student-card"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: isMobile ? 0 : idx * 0.05 }}
+                >
+                  <div className="student-card-header">
+                    <span className="student-event-category" style={{
+                      color: std.category === 'CODING' ? '#34d399' :
+                             std.category === 'INNOVATION' ? '#fb923c' :
+                             std.category === 'STRATEGY' ? '#60a5fa' :
+                             std.category === 'ENTERTAINMENT' ? '#f43f5e' : '#fff'
+                    }}>{std.category}</span>
+                    <h4 className="student-event-title syncopate">{std.event}</h4>
+                  </div>
+                  <div className="student-leads">
+                    {std.leads.map((lead, lIdx) => (
+                      <div className="lead-row" key={lIdx}>
+                        <span className="lead-name">{lead.name}</span>
+                        <a href={lead.link} className="lead-phone-btn" title={`Call ${lead.name}`}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                          <span>{lead.phone}</span>
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+          </div>
+          <div className="section-number syncopate">//04</div>
+        </section>
+
         <section className="footer-section-modern" id="footer">
           <div className="footer-inner-modern">
             <div className="footer-top-modern">
@@ -416,8 +656,8 @@ function App() {
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#events">Events</a>
-                <a href="#register" onClick={(e) => { e.preventDefault(); setSelectedEvent(''); setShowRegister(true); }}>Register</a>
-                <a href="#/admin">Admin</a>
+                <a href="#timeline">Schedule</a>
+                <a href="#crew">Contact</a>
               </div>
 
               <div className="footer-links-group">
@@ -438,7 +678,7 @@ function App() {
               </div>
               <div className="footer-bottom-center">
                 <span className="designed-by">
-                  Website designed by <a href="https://www.linkedin.com/in/shubham-mhaske-96b585291/" target="_blank" rel="noopener noreferrer" style={{ color: '#a855f7', textDecoration: 'none', fontWeight: 500 }}>Shubham Mhaske</a>
+                  Website designed by <a href="https://www.linkedin.com/in/shubham-mhaske-96b585291/" target="_blank" rel="noopener noreferrer" className="sparkle-text">Shubham Mhaske</a>
                 </span>
               </div>
               <div className="footer-bottom-right">
