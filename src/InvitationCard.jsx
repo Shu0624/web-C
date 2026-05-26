@@ -184,7 +184,7 @@ function InvitationCard() {
 
             {/* Greeting */}
             <div className="invitation-greeting">
-              <p className="greeting-text">{guestName ? `Dear ${guestName},` : 'Dear Esteemed Guest,'}</p>
+              <p className="greeting-text">{guestName ? `Respected ${guestName},` : 'Respected Esteemed Guest,'}</p>
             </div>
 
             {/* Body */}
