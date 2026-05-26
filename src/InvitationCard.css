@@ -754,41 +754,11 @@
    PRINT STYLES
    ═══════════════════════════════════════════════════════ */
 
-@media print {
-  .invitation-page {
-    background: #030303 !important;
-    padding: 0;
-    min-height: auto;
-  }
-
-  .invitation-particles,
-  .invitation-orb,
-  .invitation-back-btn,
-  .invitation-actions,
-  .link-generator-panel {
-    display: none !important;
-  }
-
-  .invitation-card-wrapper {
-    opacity: 1 !important;
-    transform: none !important;
-    max-width: 100%;
-  }
-
-  .invitation-outer-frame {
-    box-shadow: none;
-  }
-
-  .invitation-inner-card {
-    background: #0a0814 !important;
-  }
-}
-
 /* ═══════════════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE (Screen Only)
    ═══════════════════════════════════════════════════════ */
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .invitation-page {
     padding: 5rem 1rem 2rem;
   }
@@ -898,7 +868,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .invitation-inner-card {
     padding: 2rem 1.2rem;
   }
@@ -914,5 +884,154 @@
 
   .closing-signature {
     font-size: 1.3rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PRINT STYLES (Declared last to override other styles)
+   ═══════════════════════════════════════════════════════ */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    overflow: hidden !important;
+    background-color: #030303 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .invitation-page {
+    background: #030303 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .invitation-particles,
+  .invitation-orb,
+  .invitation-back-btn,
+  .invitation-actions,
+  .link-generator-panel {
+    display: none !important;
+  }
+
+  .invitation-card-wrapper {
+    opacity: 1 !important;
+    transform: none !important;
+    width: 185mm !important;
+    height: 270mm !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    page-break-inside: avoid !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+  }
+
+  .invitation-outer-frame {
+    height: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(192, 160, 98, 0.3) !important;
+    padding: 4px !important;
+  }
+
+  .invitation-inner-card {
+    height: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: #0a0814 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 3rem 2.5rem !important;
+  }
+
+  .invitation-top-flourish,
+  .invitation-bottom-flourish,
+  .invitation-header,
+  .invitation-details-section,
+  .invitation-greeting,
+  .invitation-body,
+  .invitation-highlights,
+  .invitation-closing,
+  .invitation-footer-link {
+    margin: 0 !important;
+  }
+
+  .invitation-title {
+    font-size: 2.8rem !important;
+  }
+
+  .invitation-details-section {
+    padding-bottom: 1rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+  }
+
+  .invitation-address-row {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+  }
+
+  .invitation-date {
+    text-align: right !important;
+  }
+
+  .greeting-text {
+    font-size: 1.25rem !important;
+  }
+
+  .invitation-body p {
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .invitation-body p:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .invitation-highlights {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    padding: 1.2rem !important;
+    gap: 1rem !important;
+  }
+
+  .highlight-item {
+    gap: 0.75rem !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+  }
+
+  .highlight-icon {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .highlight-value {
+    font-size: 0.75rem !important;
+  }
+
+  .closing-signature {
+    font-size: 1.4rem !important;
   }
 }
