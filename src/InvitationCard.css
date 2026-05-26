@@ -1104,7 +1104,7 @@
   .invitation-inner-card .decor-top-right,
   .invitation-inner-card .decor-bottom-left {
     mix-blend-mode: multiply !important;
-    filter: brightness(0.4) contrast(1.2) sepia(0.2) !important;
-    opacity: 0.75 !important;
+    filter: invert(1) sepia(1) contrast(1.5) brightness(0.85) !important;
+    opacity: 0.8 !important;
   }
 }
