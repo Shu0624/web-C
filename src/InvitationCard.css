@@ -903,13 +903,14 @@
     width: 210mm !important;
     height: 297mm !important;
     overflow: hidden !important;
-    background-color: #030303 !important;
+    background-color: #ffffff !important;
+    color: #111111 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
   .invitation-page {
-    background: #030303 !important;
+    background: #ffffff !important;
     padding: 0 !important;
     margin: 0 !important;
     width: 210mm !important;
@@ -947,7 +948,8 @@
     display: flex !important;
     flex-direction: column !important;
     box-shadow: none !important;
-    border: 1px solid rgba(192, 160, 98, 0.3) !important;
+    border: 2px solid #8c7343 !important;
+    background: #8c7343 !important;
     padding: 4px !important;
   }
 
@@ -955,7 +957,8 @@
     height: 100% !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    background: #0a0814 !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(140, 115, 67, 0.3) !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
@@ -974,13 +977,30 @@
     margin: 0 !important;
   }
 
+  .flourish-line {
+    background: linear-gradient(90deg, transparent, rgba(140, 115, 67, 0.6), transparent) !important;
+  }
+  
+  .flourish-diamond {
+    background: rgba(140, 115, 67, 0.8) !important;
+  }
+
+  .invitation-label {
+    color: #8c7343 !important;
+  }
+
   .invitation-title {
+    background: linear-gradient(180deg, #9c7a3c 0%, #705423 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1)) !important;
     font-size: 2.8rem !important;
   }
 
   .invitation-details-section {
     padding-bottom: 1rem !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border-bottom: 1px solid rgba(140, 115, 67, 0.2) !important;
   }
 
   .invitation-address-row {
@@ -990,22 +1010,37 @@
     align-items: flex-start !important;
   }
 
+  .invitation-address .address-name {
+    color: #111111 !important;
+  }
+
+  .invitation-address .address-line {
+    color: #444444 !important;
+  }
+
   .invitation-date {
     text-align: right !important;
+    color: #8c7343 !important;
   }
 
   .greeting-text {
     font-size: 1.25rem !important;
+    color: #111111 !important;
   }
 
   .invitation-body p {
     font-size: 1.05rem !important;
     line-height: 1.7 !important;
+    color: #222222 !important;
     margin-bottom: 0.8rem !important;
   }
 
   .invitation-body p:last-child {
     margin-bottom: 0 !important;
+  }
+
+  .invitation-body strong {
+    color: #8c7343 !important;
   }
 
   .invitation-highlights {
@@ -1014,6 +1049,8 @@
     justify-content: space-between !important;
     padding: 1.2rem !important;
     gap: 1rem !important;
+    background: rgba(140, 115, 67, 0.04) !important;
+    border: 1px solid rgba(140, 115, 67, 0.25) !important;
   }
 
   .highlight-item {
@@ -1025,13 +1062,49 @@
   .highlight-icon {
     width: 38px !important;
     height: 38px !important;
+    background: rgba(140, 115, 67, 0.1) !important;
+    border: 1px solid rgba(140, 115, 67, 0.25) !important;
+    color: #8c7343 !important;
+  }
+
+  .highlight-label {
+    color: #555555 !important;
   }
 
   .highlight-value {
     font-size: 0.75rem !important;
+    color: #111111 !important;
+  }
+
+  .closing-regards {
+    color: #8c7343 !important;
   }
 
   .closing-signature {
     font-size: 1.4rem !important;
+    color: #8c7343 !important;
+    background: linear-gradient(135deg, #9c7a3c, #705423) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  .closing-role {
+    color: #444444 !important;
+  }
+
+  .closing-dept {
+    color: #555555 !important;
+  }
+
+  .invitation-footer-link span {
+    color: #8c7343 !important;
+  }
+
+  .invitation-inner-card .decor-top-right,
+  .invitation-inner-card .decor-bottom-left {
+    mix-blend-mode: multiply !important;
+    filter: brightness(0.4) contrast(1.2) sepia(0.2) !important;
+    opacity: 0.75 !important;
   }
 }
